@@ -74,6 +74,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<?php
 	var_dump($user);
 	?>
+
+	<h1>
+	SQLite Database, Bootstrap, JSON already set !!!!!!
+	</h1>
+
 		<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
 
 		<p>If you would like to edit this page you'll find it located at:</p>
