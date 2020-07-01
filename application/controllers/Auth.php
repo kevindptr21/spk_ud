@@ -10,7 +10,9 @@ class Auth extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('v_halamanutama');
+		$this->load->view('template/header');
+		$this->load->view('pages/v_home');
+		$this->load->view('template/footer');
 	}
 
 	public function authentication() {

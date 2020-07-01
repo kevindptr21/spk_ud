@@ -1,10 +1,10 @@
 <? 
 $nav = array ( 
-    ['title' => 'Home','icon'=> 'outline_home_black_18dp.png','href' => 'index.php?pages=home'],
-    ['title' => 'Manajemen Karyawan','icon'=> 'outline_people_alt_black_18dp.png','href' => 'index.php?pages=m_karyawan'],
-    ['title' => 'Manajemen Pekerjaan','icon'=> 'outline_work_outline_black_18dp.png','href' => 'index.php?pages=m_pekerjaan'],
-    ['title' => 'Manajemen Kriteria','icon'=> 'outline_text_snippet_black_18dp.png','href' => 'index.php?pages=m_kriteria'],
-    ['title' => 'Penilaian Karyawan','icon'=> 'outline_calculate_black_18dp.png','href' => 'index.php?pages=penilaian'],
+    ['title' => 'Home','icon'=> 'outline_home_black_18dp.png','href' => 'auth'],
+    ['title' => 'Manajemen Karyawan','icon'=> 'outline_people_alt_black_18dp.png','href' => 'karyawan'],
+    ['title' => 'Manajemen Pekerjaan','icon'=> 'outline_work_outline_black_18dp.png','href' => 'pekerjaan'],
+    ['title' => 'Manajemen Kriteria','icon'=> 'outline_text_snippet_black_18dp.png','href' => '-'],
+    ['title' => 'Penilaian Karyawan','icon'=> 'outline_calculate_black_18dp.png','href' => '-'],
 );
 ?>
 <div class="logo">
@@ -15,12 +15,8 @@ $nav = array (
         <? echo '<ul class="list-group">';
         foreach($nav as $v) {
             echo '<a href="'.$v['href'].'">';
-            if(isset($_GET["pages"])){
-                if($_GET["pages"] === substr($v["href"],16)){
-                    echo '<li class="list-group-item" style="background:#adff2f">';
-                }else {
-                    echo '<li class="list-group-item">';    
-                }
+            if($_SERVER["REQUEST_URI"] === "/".$v["href"]){
+                echo '<li class="list-group-item" style="background:#adff2f">';
             }else {
                 echo '<li class="list-group-item">';
             }
