@@ -21,13 +21,10 @@ class Welcome extends CI_Controller {
 
 	function __construct(){
 		parent::__construct();
-		$this->load->model('testmodel');
-		$this->load->database();
 	}
 
 	public function index()
 	{
-		$data['user'] = $this->testmodel->getUser();
-		$this->load->view('welcome_message',$data);
+		$this->load->view('welcome_message');
 	}
 }

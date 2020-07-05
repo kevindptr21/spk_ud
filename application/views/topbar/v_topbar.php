@@ -5,8 +5,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav ml-auto">
-            <a class="nav-item nav-link btn btn-lg btn-danger text-light" href="#">
-                <img src="<? base_url() ?>assets/icons/outline_exit_to_app_black_18dp.png"/> Logout
+            <a class="nav-item nav-link btn btn-lg btn-danger text-light" href="auth/logout">
+                <i class="fas fa-sign-out-alt"></i> Logout
             </a>
         </div>
     </div>

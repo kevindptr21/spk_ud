@@ -1,3 +1,25 @@
+/* LOGIN */
+.form-signin {
+	width: 100%;
+	max-width: 330px;
+	padding: 15px;
+	margin: auto;
+	transform: translate(0,50%);
+}
+
+form {
+	display: block;
+	margin-top: 0em;
+}
+
+.text-center {
+	text-align: center !important;
+}
+
+hr {
+	background-color: #B0E0E6;
+}
+
 /* SIDEBAR MENU */
 #sidebar {
 	width: 250px;
@@ -21,6 +43,7 @@
 	overflow: hidden;
 	padding-top: 95px;
 	width: 100%;
+	transition: all 0.3s;
 }
 .list-menu {
 	height: 70vh;
@@ -43,7 +66,7 @@ ul li:hover{
 	height: 100vh;
 	transition: all 0.3s;
 	overflow: hidden;
-	position: fixed;
+	position: absolute;
 	right: 0;
 }
 .topbar {
@@ -60,14 +83,19 @@ ul li:hover{
 	border-top: 5px solid;
 	border-left: 20px solid;
 	height: calc(100vh - 13vh);
+	/* position: relative; */
 	overflow: auto;
 }
 
-/* UNKOWN */
+/* Form and Another Component */
 .tabs-text a {
 	color: white;
 }
 
 .tk {
 	font-size: 14px;
+}
+
+input[type=text] {
+	text-transform: capitalize;
 }
