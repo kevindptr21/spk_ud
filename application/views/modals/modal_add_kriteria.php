@@ -9,7 +9,7 @@ data-backdrop="static" data-keyboard="false">
                 </button>
             </div>
 
-            <form action="<? echo base_url() ?>kriteria/addkriteria" method="post">
+            <form method="post" action="<? base_url()?>kriteria/addKriteria">
                 <div class="modal-body">
                     <div class="form-group row">
                         <label class="col-sm-4 col-form-label">Nama Kriteria</label>

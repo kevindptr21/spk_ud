@@ -8,12 +8,13 @@ data-backdrop="static" data-keyboard="false">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="" method="post">
+            <form action="<?php base_url(); ?>kriteria/changeKriteria" method="post">
                 <? foreach($kriteria as $mk) { ?>
                 <div class="modal-body">
                     <div class="form-group row">
                         <div class="input-group col-sm-5">
-                            <input type="text" class="form-control" name="n_kriteria[]" value="<? echo $mk['nama_kriteria'] ?>" >
+                            <input type="hidden" name="id_kriteria[]" value="<? echo $mk['id_kriteria'] ?>">
+                            <input type="text" class="form-control" name="n_kriteria[]" value="<? echo $mk['nama_kriteria'] ?>"required>
                         </div>
                         <div class="input-group col">
                             <input type="number" class="form-control" name="n_bobot[]" min="0" max="100"
@@ -23,7 +24,7 @@ data-backdrop="static" data-keyboard="false">
                             </div>
                         </div>
                         <div class="input-group col">
-                            <select class="custom-select my-1 " name="j_kriteria">
+                            <select class="custom-select my-1 " name="j_kriteria[]">
                                 <option selected value="0">Pilih</option>
                                 <? 
                                 foreach($jenis as $j) {

@@ -7,7 +7,10 @@ class Kriteria extends CI_Controller {
         parent::__construct();
         if($this->session->userdata('login') == false){
             redirect('auth');
+        }else{
+            return;
         }
+
         $this->load->model('M_Kriteria');
 	}
 
@@ -23,19 +26,19 @@ class Kriteria extends CI_Controller {
     private function validation($params,$data) {
         if($params == "add"){
             $val = $this->M_Kriteria->getKriteriaName($data['nama']);
-            if($val == null || $val == 0){
+
+            if($val == null && $data['jenis'] != "0"){
                 $this->M_Kriteria->insertKriteria($data['nama'],$data['jenis']);
                 $this->session->set_flashdata('success','Kriteria Berhasil Ditambahkan');
-                redirect('kriteria');
-            }else {
+
+            }else if($data['jenis'] == "0") {
+                $this->session->set_flashdata('errMsg','Harus Memilih Jenis Kriteria!');
+
+            }else{
                 $this->session->set_flashdata('errMsg','Kriteria '.$data['nama']." Telah Tersedia");
-                redirect('kriteria');
             }
-           
-        }else if($params == "change"){
-
-        }else {
-
+            
+            redirect('kriteria');
         }
     }
 
@@ -47,9 +50,22 @@ class Kriteria extends CI_Controller {
         $this->validation('add',$data);
     }
 
+    public function changeKriteria(){
+        $data = array(
+            'id' => $this->input->post('id_kriteria[]'),
+            'nama' => $this->input->post('n_kriteria[]'),
+            'nilai' => $this->input->post('n_bobot[]'),
+            'jenis' => $this->input->post('j_kriteria[]'),
+        );
+        $dataLength = count($this->input->post('n_kriteria[]'));
+        $this->M_Kriteria->updateKriteria($data,$dataLength);
+        $this->session->set_flashdata('success','Kriteria Berhasil Diupdate');
+        redirect('kriteria');
+    }
+
     public function deleteKriteria($params){
         $this->M_Kriteria->deleteKriteriaId($params);
-        $this->session->set_flashdata('success',"Berhasil Menghapus Kriteria");
+        $this->session->set_flashdata('success','Kriteria Berhasil Dihapus');
         redirect('kriteria');
     }
 }

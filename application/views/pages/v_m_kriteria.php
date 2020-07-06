@@ -23,7 +23,7 @@
                 </tr>
             </thead>
             <tbody>
-            <? 
+                <? 
                 if($kriteria == null) {
                     echo '<tr>
                     <td colspan="5" align="center">Belum Ada Kriteria Yang Ditambahkan</td>
@@ -93,8 +93,3 @@
 $this->load->view('modals/modal_add_kriteria');
 $this->load->view('modals/modal_edit_kriteria');
 ?>
-
-<!-- <a class="btn btn-danger text-light" data-toggle="modal" data-target="#alertWarning'.$kr['id_kriteria'].'">
-    <i class="fas fa fa-trash"></i> Hapus
-</a> -->
-<!-- onclick="validate(`'.$kr['id_kriteria'].'` );" -->

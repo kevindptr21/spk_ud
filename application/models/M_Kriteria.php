@@ -8,6 +8,45 @@ class M_Kriteria extends CI_Model {
         $data = $this->db->get()->result_array();
         return $data;
     }
+
+    private function resetData($params) {
+        $resetData = $this->getListKriteria();
+        if($params == "bobot"){
+            foreach($resetData as $rd){
+                $this->db->set('nilai_bobot',0);
+                $this->db->where('id_kriteria',$rd['id_kriteria']);
+                $this->db->update('kriteria');
+            }
+
+        }else if($params == "increment"){
+
+            if(count($this->getListKriteria()) == 0){
+                return;
+            }else{
+                $no = 1;
+                foreach($resetData as $d){
+                    $this->db->set('id_kriteria','C'.$no++);
+                    $this->db->where('nama_kriteria',$d['nama_kriteria']);
+                    $this->db->update('kriteria');
+                }    
+            }
+
+        }else{
+            return;
+        }
+    }
+
+    private function createIncrement(){
+        $str = "C";
+        $incrmnt = count($this->getListKriteria());
+        if($incrmnt == 0){
+            $kd = $str."1";
+        }else{
+            $kd = $str.($incrmnt+1);
+        }
+
+        return $kd;
+    }
     
     public function getKriteriaName($params){
         $this->db->select("nama_kriteria");
@@ -20,16 +59,7 @@ class M_Kriteria extends CI_Model {
     }
 
     public function insertKriteria($a,$b){
-        $str = "C";
-        $incrmnt = count($this->getListKriteria());
-        if($incrmnt == 0){
-            $kd = $str."01";
-        }else if($incrmnt > 0 && $incrmnt < 9) {
-            $kd = $str."0".($incrmnt+1);
-        }else{
-            $kd = $str.($incrmnt+1);
-        }
-
+        $kd = $this->createIncrement();
         $data = array (
             'id_kriteria' => $kd,
             'nama_kriteria' => ucwords($a),
@@ -37,11 +67,19 @@ class M_Kriteria extends CI_Model {
             'jenis_kriteria' => $b,
             'id_user' => $this->session->userdata('user code')
         );
+
         $this->db->insert('kriteria',$data);
-        $resetData = $this->getListKriteria();
-        foreach($resetData as $rd){
-            $this->db->set('nilai_bobot',0);
-            $this->db->where('id_kriteria',$rd['id_kriteria']);
+        $this->resetData('bobot'); 
+        
+    }
+    
+    public function updateKriteria($data,$dataLength){
+        for($i=0;$i<$dataLength;$i++){
+            $this->db->set('nama_kriteria',ucwords($data['nama'][$i]));
+            $this->db->set('nilai_bobot',$data['nilai'][$i]);
+            $this->db->set('jenis_kriteria',$data['jenis'][$i]);
+            $this->db->set('id_user',$this->session->userdata('user code'));
+            $this->db->where('id_kriteria',$data['id'][$i]);
             $this->db->update('kriteria');
         }
     }
@@ -49,13 +87,8 @@ class M_Kriteria extends CI_Model {
     public function deleteKriteriaId($params){
         $this->db->where('id_kriteria',$params);
         $this->db->delete('kriteria');
-        $resetData = $this->getListKriteria();
-        foreach($resetData as $rd){
-            $this->db->set('nilai_bobot',0);
-            $this->db->where('id_kriteria',$rd['id_kriteria']);
-            $this->db->update('kriteria');
-        }
+        $this->resetData('bobot');
+        $this->resetData('increment');
+        
     }
-
-    
 }

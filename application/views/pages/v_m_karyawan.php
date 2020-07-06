@@ -50,17 +50,17 @@
         </table>
     </div>
     <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-        <form>
+        <form method="post" action="<?php base_url()?>karyawan/addKaryawan">
             <div class="form-group row">
-                <label for="inputEmail3" class="col-sm-2 col-form-label">Nama Karyawan</label>
+                <label class="col-sm-2 col-form-label">Nama Karyawan</label>
                 <div class="col-sm-5">
-                    <input type="email" class="form-control" id="inputEmail3">
+                    <input type="text" class="form-control" name="nama" required>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="inputEmail3" class="col-sm-2 col-form-label">Alamat</label>
+                <label class="col-sm-2 col-form-label">Alamat</label>
                 <div class="col-sm-3">
-                    <textarea name="alamat" cols="10" rows="5" class="form-control"></textarea>
+                    <textarea name="alamat" cols="10" rows="5" class="form-control" required></textarea>
                 </div>
             </div>
             <fieldset class="form-group">
@@ -68,13 +68,13 @@
                     <legend class="col-form-label col-sm-2 pt-0">Jenis Kelamin</legend>
                     <div class="col-sm-10">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                            <input class="form-check-input" type="radio" name="jk" value="Laki-Laki" checked required>
                             <label class="form-check-label" for="gridRadios1">
-                                Laki - Laki
+                                Laki-Laki
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                            <input class="form-check-input" type="radio" name="jk" value="Perempuan" required>
                             <label class="form-check-label" for="gridRadios2">
                                 Perempuan
                             </label>
@@ -85,7 +85,7 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Tanggal Diterima</label>
                 <div class="input-group mb-2 mr-sm-2 col-sm-3 date" data-provide="datepicker">
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" name="tgl" required>
                     <div class="input-group-prepend">
                         <div class="input-group-text">
                             <i class="fas fa-calendar input-prefix" tabindex=0></i>
@@ -96,11 +96,15 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="inlineFormCustomSelectPref">Pekerjaan</label>
                 <div class="col-sm-3">
-                    <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-                        <option selected>Pilih</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <select class="custom-select my-1 mr-sm-2" name="pekerjaan" required>
+                        <label></label>
+                        <?php
+                        foreach($pekerjaan as $p){
+                            echo '
+                            <option value="'.$p['id_pekerjaan'].'">'.$p['nama_pekerjaan'].'</option>';
+                        }
+                        ?>
+                        
                     </select>
                 </div>
             </div>
@@ -110,7 +114,7 @@
                     <button type="submit" class="btn btn-primary mr-5 btn-lg align-self-center">
                         Simpan <i class="fas fa fa-save"></i>
                     </button>
-                    <button type="submit" class="btn btn-warning btn-lg">
+                    <button type="reset" class="btn btn-warning btn-lg">
                         Batal <i class="fas fa fa-window-close"></i>
                     </button>
                 </div>

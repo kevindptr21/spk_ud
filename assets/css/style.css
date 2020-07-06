@@ -99,3 +99,7 @@ ul li:hover{
 input[type=text] {
 	text-transform: capitalize;
 }
+.tab-content{
+	height: 75vh;
+	overflow: auto;
+}
