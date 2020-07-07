@@ -9,8 +9,8 @@ data-backdrop="static" data-keyboard="false">
                 </button>
             </div>
             <form action="<?php base_url(); ?>kriteria/changeKriteria" method="post">
-                <? foreach($kriteria as $mk) { ?>
                 <div class="modal-body">
+                    <? foreach($kriteria as $mk) { ?>
                     <div class="form-group row">
                         <div class="input-group col-sm-5">
                             <input type="hidden" name="id_kriteria[]" value="<? echo $mk['id_kriteria'] ?>">
@@ -38,8 +38,8 @@ data-backdrop="static" data-keyboard="false">
                             </select>
                         </div>
                     </div>
+                    <? } ?>
                 </div>
-                <? } ?>
             <div class="modal-footer">
                 <div class="form-group row d-flex justify-content-center">
                     <div class="col">

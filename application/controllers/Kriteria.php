@@ -7,10 +7,7 @@ class Kriteria extends CI_Controller {
         parent::__construct();
         if($this->session->userdata('login') == false){
             redirect('auth');
-        }else{
-            return;
         }
-
         $this->load->model('M_Kriteria');
 	}
 
@@ -57,10 +54,11 @@ class Kriteria extends CI_Controller {
             'nilai' => $this->input->post('n_bobot[]'),
             'jenis' => $this->input->post('j_kriteria[]'),
         );
-        $dataLength = count($this->input->post('n_kriteria[]'));
-        $this->M_Kriteria->updateKriteria($data,$dataLength);
-        $this->session->set_flashdata('success','Kriteria Berhasil Diupdate');
-        redirect('kriteria');
+        var_dump($data);
+        // $dataLength = count($this->input->post('n_kriteria[]'));
+        // $this->M_Kriteria->updateKriteria($data,$dataLength);
+        // $this->session->set_flashdata('success','Kriteria Berhasil Diupdate');
+        // redirect('kriteria');
     }
 
     public function deleteKriteria($params){
