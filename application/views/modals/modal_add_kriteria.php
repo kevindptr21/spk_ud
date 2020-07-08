@@ -14,7 +14,8 @@ data-backdrop="static" data-keyboard="false">
                     <div class="form-group row">
                         <label class="col-sm-4 col-form-label">Nama Kriteria</label>
                         <div class="col">
-                            <input type="text" class="form-control" name="n_kriteria" required>
+                            <input type="text" class="form-control" name="n_kriteria" required 
+                            value="<?php echo $this->session->flashdata('nama') ?  $this->session->flashdata('nama') : '' ?>">
                         </div>
                     </div>
 

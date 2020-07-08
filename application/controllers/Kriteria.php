@@ -29,14 +29,48 @@ class Kriteria extends CI_Controller {
                 $this->session->set_flashdata('success','Kriteria Berhasil Ditambahkan');
 
             }else if($data['jenis'] == "0") {
-                $this->session->set_flashdata('errMsg','Harus Memilih Jenis Kriteria!');
+                $this->session->set_flashdata('errAddKriteria','Harus Memilih Jenis Kriteria!');
+                $this->session->set_flashdata('nama',$data['nama']);
 
             }else{
-                $this->session->set_flashdata('errMsg','Kriteria '.$data['nama']." Telah Tersedia");
+                $this->session->set_flashdata('errAddKriteria','Kriteria '.$data['nama']." Telah Tersedia");
             }
-            
-            redirect('kriteria');
+
+        } else if($params == "change"){
+            $bobotValue = 0;
+            $complete = 0;
+
+            for($i=0;$i<count($data['nilai']);$i++){
+
+                if($data['jenis'][$i] == "0" && $data['nama'][$i] != ""){
+                    $this->session->set_flashdata('errEditKriteria',"Harus Memilih Jenis Kriteria");
+                    $complete = $complete - 1;
+                }else if($data['jenis'][$i] != "0" && $data['nama'][$i] == ""){
+                    $this->session->set_flashdata('errEditKriteria',"Nama Kriteria Tidak Boleh Kosong");
+                    $complete = $complete - 1;
+                }else if($data['jenis'][$i] == "0" && $data['nama'][$i] == ""){
+                    $this->session->set_flashdata('errEditKriteria',"Nama dan Jenis Kriteria Harus Terisi");
+                    $complete = $complete - 1;
+                }else{
+                    $bobotValue = $bobotValue + $data['nilai'][$i];
+                    $complete = $complete + 1;
+                }
+
+            };
+
+            if($complete == count($data['nilai'])){
+                if($bobotValue > 100){
+                    $this->session->set_flashdata('errEditKriteria',"Jumlah Nilai Bobot > 100%");
+                }else if($bobotValue < 100) {
+                    $this->session->set_flashdata('errEditKriteria',"Jumlah Nilai Bobot < 100%");
+                }else {
+                    $this->M_Kriteria->updateKriteria($data,count($data['nilai']));
+                    $this->session->set_flashdata('success',"Berhasil Mengubah Kriteria");
+                }
+            }
         }
+
+        redirect('kriteria');
     }
 
     public function addKriteria(){
@@ -54,11 +88,9 @@ class Kriteria extends CI_Controller {
             'nilai' => $this->input->post('n_bobot[]'),
             'jenis' => $this->input->post('j_kriteria[]'),
         );
-        var_dump($data);
-        // $dataLength = count($this->input->post('n_kriteria[]'));
-        // $this->M_Kriteria->updateKriteria($data,$dataLength);
-        // $this->session->set_flashdata('success','Kriteria Berhasil Diupdate');
-        // redirect('kriteria');
+
+        $this->validation('change',$data);
+        
     }
 
     public function deleteKriteria($params){

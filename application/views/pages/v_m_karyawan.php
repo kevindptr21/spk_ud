@@ -111,10 +111,10 @@
 
             <div class="form-group row d-flex justify-content-center">
                 <div class="col-md-10 ml-auto">
-                    <button type="submit" class="btn btn-primary mr-5 btn-lg align-self-center">
+                    <button type="submit" class="btn btn-primary mr-5 btn-md align-self-center">
                         Simpan <i class="fas fa fa-save"></i>
                     </button>
-                    <button type="reset" class="btn btn-warning btn-lg">
+                    <button type="reset" class="btn btn-warning btn-md">
                         Batal <i class="fas fa fa-window-close"></i>
                     </button>
                 </div>

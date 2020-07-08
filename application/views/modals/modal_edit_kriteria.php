@@ -13,12 +13,26 @@ data-backdrop="static" data-keyboard="false">
                     <? foreach($kriteria as $mk) { ?>
                     <div class="form-group row">
                         <div class="input-group col-sm-5">
-                            <input type="hidden" name="id_kriteria[]" value="<? echo $mk['id_kriteria'] ?>">
-                            <input type="text" class="form-control" name="n_kriteria[]" value="<? echo $mk['nama_kriteria'] ?>"required>
+                            <input type="hidden" name="id_kriteria[]" value="<?= $mk['id_kriteria'] ?>">
+                            <input 
+                                type="text"
+                                id="<?= substr($mk['id_kriteria'],1)?>"
+                                pattern="[A-z]{0,25}|[A-z]{0,25}([ ])[A-z]{0,25}" 
+                                title="Tidah Boleh Menggunakan Angka" 
+                                class="form-control" 
+                                name="n_kriteria[]" 
+                                value="<?= $mk['nama_kriteria'] ?>"
+                            >
+                            <div id="errMsg">
+                                <!-- <small class="text-success">
+                                    Hanya Huruf Alphabet. (a-z)
+                                </small> -->
+                            </div>
+
                         </div>
                         <div class="input-group col">
-                            <input type="number" class="form-control" name="n_bobot[]" min="0" max="100"
-                            value="<? echo $mk['nilai_bobot'] ?>">
+                            <input type="number"class="form-control" name="n_bobot[]" min="0" max="100"
+                            value="<?= $mk['nilai_bobot'] ?>">
                             <div class="input-group-prepend input-sm">
                                 <div class="input-group-text">%</div>
                             </div>
@@ -37,6 +51,7 @@ data-backdrop="static" data-keyboard="false">
                                 ?>
                             </select>
                         </div>
+                        
                     </div>
                     <? } ?>
                 </div>

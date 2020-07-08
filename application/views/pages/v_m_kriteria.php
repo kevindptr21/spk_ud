@@ -1,17 +1,16 @@
-
 <nav class="pt-4 pl-2 bg-primary">
     <div class="nav nav-tabs tabs-text" id="nav-tab" role="tablist">
-        <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#daftarKriteria" role="tab" aria-controls="nav-home" aria-selected="true">
+        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#daftarKriteria" role="tab" aria-controls="nav-home" aria-selected="true">
             <img src="<? echo base_url() ?>assets/icons/outline_ballot_black_18dp.png" /> Daftar Kriteria
         </a>
-        <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#ubahKriteria" role="tab" 
+        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#ubahKriteria" role="tab" 
         aria-controls="nav-profile" aria-selected="false">
             <img src="<? echo base_url() ?>assets/icons/outline_post_add_black_18dp.png" /> Ubah Daftar Kriteria
         </a>
     </div>
 </nav>
-<div class="tab-content pt-5" id="nav-tabContent">
-    <div class="tab-pane fade col-md-7" id="daftarKriteria" role="tabpanel" aria-labelledby="nav-home-tab">
+<div class="tab-content pt-4" id="nav-tabContent">
+    <div class="tab-pane fade col-md-7 show active" id="daftarKriteria" role="tabpanel" aria-labelledby="nav-home-tab">
         
         <table class="table table-striped mt-4">
             <thead class="thead-dark">
@@ -34,7 +33,7 @@
                         echo '<tr>
                         <td>'.$no_++.'</td>
                         <td>'.$kr['nama_kriteria'].'</td>
-                        <td>'.$kr['nilai_bobot'].'</td>
+                        <td align="center">'.$kr['nilai_bobot'].'</td>
                         <td>'.$kr['jenis_kriteria'].'</td>
                         </tr>';
                     }
@@ -44,11 +43,11 @@
         </table>
     </div>
 
-    <div class="tab-pane fade show active col-md-7" id="ubahKriteria" role="tabpanel" aria-labelledby="nav-profile-tab">
-        <button type="button" class="btn btn-success" id="btnModalAdd" data-toggle="modal" data-target="#addKriteria">
+    <div class="tab-pane fade col-md-7" id="ubahKriteria" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <button type="button" id="openAddKriteria" class="btn btn-success" data-toggle="modal" data-target="#addKriteria">
             <i class="fas fa fa-plus-circle"></i> Tambah Kriteria
         </button>
-        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editKriteria">
+        <button type="button" id="openEditKriteria" class="btn btn-warning" data-toggle="modal" data-target="#editKriteria">
             <i class="fas fa fa-edit"></i> Ubah Kriteria
         </button>
         <table class="table table-striped mt-4">
@@ -73,7 +72,7 @@
                         echo '<tr>
                             <td>'.$no__++.'</td>
                             <td>'.$kr['nama_kriteria'].'</td>
-                            <td>'.$kr['nilai_bobot'].'</td>
+                            <td align="center">'.$kr['nilai_bobot'].'</td>
                             <td>'.$kr['jenis_kriteria'].'</td>
                             <td>
                                 <a class="btn btn-danger text-light" 

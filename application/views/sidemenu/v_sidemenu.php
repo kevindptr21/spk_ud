@@ -4,7 +4,7 @@ $nav = array (
     ['title' => 'Manajemen Karyawan','icon'=> 'outline_people_alt_black_18dp.png','href' => 'karyawan'],
     ['title' => 'Manajemen Pekerjaan','icon'=> 'outline_work_outline_black_18dp.png','href' => 'pekerjaan'],
     ['title' => 'Manajemen Kriteria','icon'=> 'outline_ballot_black_18dp.png','href' => 'kriteria'],
-    ['title' => 'Penilaian Karyawan','icon'=> 'outline_grading_black_18dp.png','href' => '-'],
+    ['title' => 'Penilaian Karyawan','icon'=> 'outline_grading_black_18dp.png','href' => 'penilaian'],
 );
 ?>
 <div class="logo">

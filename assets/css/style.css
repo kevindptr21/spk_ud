@@ -103,3 +103,15 @@ input[type=text] {
 	height: 75vh;
 	overflow: auto;
 }
+
+/* SMART-TOPSIS Content */
+#form-penilaian{
+	width: 35%;
+	float: left;
+}
+
+#inputed-data{
+	width: 60%;
+	/* padding-left:20px; */
+	float:right;
+}
