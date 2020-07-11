@@ -12,9 +12,7 @@
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/fontawesome.min.css">
     <script src="<?php echo base_url();?>assets/js/swal.min.js"></script>
     <script src="<?php echo base_url();?>assets/js/alertConfirm.js"></script>
-    
     <title>Halaman Utama</title>
 </head>
 
 <body>
-    

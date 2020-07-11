@@ -21,7 +21,7 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="stat
                         <label for="inputEmail3" class="col-sm-4 col-form-label">Alamat</label>
                         <div class="col">
                             <textarea name="alamat" cols="30" rows="5" class="form-control">
-                                <? echo $ke['alamat']; ?>
+                                <?php echo $ke['alamat']; ?>
                             </textarea>
                         </div>
                     </div>
@@ -62,9 +62,20 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="stat
                     <div class="form-group row">
                         <label class="col-sm-4 col-form-label" for="inlineFormCustomSelectPref">Pekerjaan</label>
                         <div class="col">
-                            <select class="custom-select my-1 mr-sm-2" name="pekerjaan">
-                                <option selected>Pilih</option>
-                                
+                            <select class="custom-select my-1 mr-sm-2" name="pekerjaan" required>
+                                <?php
+                                foreach($pekerjaan as $p){
+                                    if($ke['id_pekerjaan'] == $p['id_pekerjaan']){
+                                        echo '<option value="'.$p['id_pekerjaan'].'" selected>
+                                        '.$p['nama_pekerjaan'].'
+                                        </option>';
+                                    }else{
+                                        echo '<option value="'.$p['id_pekerjaan'].'">
+                                        '.$p['nama_pekerjaan'].'
+                                        </option>';
+                                    }
+                                }
+                                ?>
                             </select>
                         </div>
                     </div>

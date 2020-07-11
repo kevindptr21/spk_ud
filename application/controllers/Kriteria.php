@@ -25,7 +25,7 @@ class Kriteria extends CI_Controller {
             $val = $this->M_Kriteria->getKriteriaName($data['nama']);
 
             if($val == null && $data['jenis'] != "0"){
-                $this->M_Kriteria->insertKriteria($data['nama'],$data['jenis']);
+                $this->M_Kriteria->insertKriteria($data);
                 $this->session->set_flashdata('success','Kriteria Berhasil Ditambahkan');
 
             }else if($data['jenis'] == "0") {
@@ -68,6 +68,9 @@ class Kriteria extends CI_Controller {
                     $this->session->set_flashdata('success',"Berhasil Mengubah Kriteria");
                 }
             }
+        } else {
+            $this->M_Kriteria->deleteKriteriaId($data);
+            $this->session->set_flashdata('success','Kriteria Berhasil Dihapus');
         }
 
         redirect('kriteria');
@@ -94,8 +97,6 @@ class Kriteria extends CI_Controller {
     }
 
     public function deleteKriteria($params){
-        $this->M_Kriteria->deleteKriteriaId($params);
-        $this->session->set_flashdata('success','Kriteria Berhasil Dihapus');
-        redirect('kriteria');
+        $this->validation('delete',$params);
     }
 }

@@ -75,7 +75,7 @@
                             <td align="center">'.$kr['nilai_bobot'].'</td>
                             <td>'.$kr['jenis_kriteria'].'</td>
                             <td>
-                                <a class="btn btn-danger text-light" 
+                                <a class="btn btn-danger text-light"
                                 onclick="swalConfirm(`kriteria`,`'.$kr['id_kriteria'].'`,`'.$kr['nama_kriteria'].'`);">
                                     <i class="fas fa fa-trash"></i> Hapus
                                 </a>
@@ -88,7 +88,7 @@
         </table>
     </div>
 </div>
-<? 
+<?php 
 $this->load->view('modals/modal_add_kriteria');
 $this->load->view('modals/modal_edit_kriteria');
 ?>

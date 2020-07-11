@@ -8,39 +8,39 @@
         </a>
     </div>
 </nav>
-<div class="tab-content pt-5 container" id="nav-tabContent">
+<div class="tab-content pt-4 container" id="nav-tabContent">
 
     <!-- INPUT NILAI -->
     <div class="tab-pane fade show active" id="nav-penilaian" role="tabpanel" aria-labelledby="nav-penilaian-tab">
-        
         <div id="form-penilaian">
-            <form method="post" action="<? base_url()?>penilaian/testingInput">
+            <form id="frm" method="post" action="<? base_url()?>penilaian/testingInput">
                 <div class="form-group row">
                     <label class="col-sm-5 col-form-label">Tanggal Penilaian</label>
                     <div class="col-sm">
                         <input 
                             style="width:7em;"
                             type="text" 
-                            disable 
+                            readonly 
                             class="form-control" 
                             name="tgl_penilaian" 
-                            value="<?= date('d/m/Y') ?>"
+                            value="<?= date('d-m-Y') ?>"
                         >
                     </div>
                 </div>
 
                 <div class="form-group row">
+                    <input type="hidden" id="id" name="id">
                     <label class="col-sm-5 col-form-label">Nama Karyawan</label>
                     <div class="col-sm">
                         <input 
                             type="text" 
-                            disabled
+                            readonly
                             class="form-control" 
-                            name="nama" 
+                            id="nama"
                             required
                         >
                     </div>
-                    <a class="btn btn-primary col-sm-2 text-light" data-toggle="modal" data-target="#cariKaryawan">
+                    <a class="btn btn-dark col-sm-2 text-light" id="cari" data-toggle="modal" data-target="#cariKaryawan">
                         Cari
                     </a>
                 </div>
@@ -50,7 +50,7 @@
                         <div class="col-sm">';
                         if($pk['jenis_kriteria'] == "Kualitatif"){
                             echo '
-                            <select name="n_penilaian[]" class="form-control" style="width:9em;">
+                            <select name="n_penilaian[]" id="s'.substr($pk['id_kriteria'],1).'" class="form-control" style="width:9em;">
                                 <option value="0">Pilih</option>
                                 <option value="5">Sangat Baik</option>
                                 <option value="4">Baik</option>
@@ -65,10 +65,17 @@
                                 style="width:5em;"
                                 type="number" 
                                 min="0" 
-                                name="n_penilaian[]" 
-                                class="form-control" 
-                                value="0" 
-                                pattern="[0-9]{3}" />';
+                                
+                                name="n_penilaian[]"';
+                                if($pk['nama_kriteria'] == "Masa Kerja"){
+                                    echo 'id="nk"';
+                                }else if($pk['nama_kriteria'] == "Presensi"){
+                                    echo 'id="nk2"';
+                                }
+                                echo 'class="form-control" 
+                                value="0"
+                                pattern="[0-9]" 
+                            />';
                         }
 
                     echo '</div>
@@ -78,10 +85,10 @@
 
                 <div class="form-group row d-flex justify-content-center">
                     <div class="col-md-10 ml-auto">
-                        <button type="submit" class="btn btn-primary mr-5 btn-md align-self-center">
+                        <button type="submit" id="sbmt" class="btn btn-primary mr-5 btn-md align-self-center">
                             Tambah <i class="fas fa fa-plus-circle"></i>
                         </button>
-                        <button type="reset" class="btn btn-warning btn-md">
+                        <button type="reset" id="btl" class="btn btn-warning btn-md">
                             Batal <i class="fas fa fa-window-close"></i>
                         </button>
                     </div>
@@ -96,7 +103,7 @@
                         <h4>List Karyawan Terinput</h4>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <h5>Tanggal : <?= date('d/m/Y')?></h5>
+                        <h5>Tanggal : <?php echo date('d-m-Y')?></h5>
                     </div>
                 </div>
                 <div class="container pt-3">
@@ -107,20 +114,24 @@
                             <th>Aksi</th>
                         </thead>
                         <tbody>
-                            <? if($this->cart->contents() == null) { ?>
-                                <!-- <tr>
-                                    <td colspan="3" align="center">Belum Ada Karyawan Terinput</td>
-                                </tr> -->
-                            <? } else { 
-                                $noCart = 1;
-                                foreach($this->cart->contents() as $cc){ ?>
+                            <?php if(count($penilaian) == null) { ?>
+                                
+                            <?php } else { 
+                                $no = 1;
+                                foreach($penilaian as $cc){ ?>
                                     <tr>
                                         <td><?= $no++ ?></td>
                                         <td><?= $cc['nama_karyawan']; ?></td>
-                                        <td>A | B | C</td>
+                                        <td style="width: 120px;">
+                                            <a class="btn btn-sm btn-warning" id="ajax"
+                                            data-value="<?php echo $cc['id_penilaian']; ?>">
+                                                Ubah
+                                            </a>
+                                            <a class="btn btn-sm btn-danger text-light">Hapus</a>
+                                        </td>
                                     </tr>
 
-                                <? } 
+                                <?php } 
                             } ?>
                         </tbody>
                     </table>
@@ -136,6 +147,7 @@
     </div>
 
 </div>
-<?
-$this->load->view('modals/modal_cari_karyawan');
+
+<?php
+$this->load->view('modals/modal_cari_karyawan'); 
 ?>

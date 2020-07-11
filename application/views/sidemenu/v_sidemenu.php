@@ -1,4 +1,4 @@
-<? 
+<?php 
 $nav = array ( 
     ['title' => 'Home','icon'=> 'outline_home_black_18dp.png','href' => 'home'],
     ['title' => 'Manajemen Karyawan','icon'=> 'outline_people_alt_black_18dp.png','href' => 'karyawan'],
@@ -8,11 +8,12 @@ $nav = array (
 );
 ?>
 <div class="logo">
-    <img src="<?php echo base_url() ?>assets/images/logoUD.jpg" class="img-logo" />
+    <img src="<?php base_url() ?>assets/images/logoUD.jpg" class="img-logo" />
 </div>
 <div class="menu bg-secondary">
-    <div class="list-menu ">
-        <? echo '<ul class="list-group">';
+    <div class="list-menu">
+        <?php 
+        echo '<ul class="list-group">';
         foreach($nav as $v) {
             echo '<a href="'.$v['href'].'">';
             if($_SERVER["REQUEST_URI"] === "/".$v["href"]){

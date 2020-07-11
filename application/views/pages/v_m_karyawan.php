@@ -1,29 +1,28 @@
 <nav class="pt-4 pl-2 bg-primary">
     <div class="nav nav-tabs tabs-text" id="nav-tab" role="tablist">
-        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
+        <a class="nav-item nav-link active" id="nav-karyawan-tab" data-toggle="tab" href="#nav-karyawan" role="tab" aria-controls="nav-karyawan" aria-selected="true">
             <img src="<? echo base_url() ?>assets/icons/outline_people_alt_black_18dp.png" /> Data Karyawan
         </a>
-        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">
+        <a class="nav-item nav-link" id="nav-tambahKaryawan-tab" data-toggle="tab" href="#nav-tambahKaryawan" role="tab" aria-controls="nav-tambahKaryawan" aria-selected="false">
             <img src="<? echo base_url() ?>assets/icons/outline_person_add_black_18dp.png" /> Tambah Karyawan
         </a>
     </div>
 </nav>
+
 <div class="tab-content pt-5 container" id="nav-tabContent">
-    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-        <table class="table table-striped tk" id="mydata">
+    <div class="tab-pane fade show active" id="nav-karyawan" role="tabpanel" aria-labelledby="nav-karyawan-tab">
+        <table class="table table-striped tk" id="karyawan">
             <thead class="thead-dark">
-                <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">Nama Karyawan</th>
-                    <th scope="col">Alamat</th>
-                    <th scope="col">Jenis Kelamin</th>
-                    <th scope="col">Pekerjaan</th>
-                    <th scope="col">Tanggal<br/>Diterima</th>
-                    <th scope="col">Aksi</th>
-                </tr>
+                <th scope="col">No</th>
+                <th scope="col">Nama Karyawan</th>
+                <th scope="col">Alamat</th>
+                <th scope="col">Jenis Kelamin</th>
+                <th scope="col">Pekerjaan</th>
+                <th scope="col">Tanggal<br/>Diterima</th>
+                <th scope="col">Aksi</th>
             </thead>
             <tbody>
-                <? 
+            <?
             $no = 1;
             foreach($karyawan as $k) {
                  
@@ -45,11 +44,12 @@
                         </td>
                     </tr>';
                 }
-                ?>
+            ?>
             </tbody>
         </table>
     </div>
-    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+    <div class="tab-pane fade" id="nav-tambahKaryawan" role="tabpanel" aria-labelledby="nav-tambahKaryawan-tab">
         <form method="post" action="<?php base_url()?>karyawan/addKaryawan">
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Nama Karyawan</label>
@@ -85,7 +85,7 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Tanggal Diterima</label>
                 <div class="input-group mb-2 mr-sm-2 col-sm-3 date" data-provide="datepicker">
-                    <input type="text" class="form-control" name="tgl" required>
+                    <input type="text" class="form-control" id="tglInput" onchange="dateChange()" name="tgl" required>
                     <div class="input-group-prepend">
                         <div class="input-group-text">
                             <i class="fas fa-calendar input-prefix" tabindex=0></i>
@@ -97,14 +97,12 @@
                 <label class="col-sm-2 col-form-label" for="inlineFormCustomSelectPref">Pekerjaan</label>
                 <div class="col-sm-3">
                     <select class="custom-select my-1 mr-sm-2" name="pekerjaan" required>
-                        <label></label>
                         <?php
                         foreach($pekerjaan as $p){
-                            echo '
-                            <option value="'.$p['id_pekerjaan'].'">'.$p['nama_pekerjaan'].'</option>';
+                            echo '<option value="'.$p['id_pekerjaan'].'">
+                            '.$p['nama_pekerjaan'].'</option>';
                         }
                         ?>
-                        
                     </select>
                 </div>
             </div>
@@ -123,6 +121,4 @@
         </form>
     </div>
 </div>
-<? 
-$this->load->view('modals/modal_edit_karyawan');
-?>
+<?php $this->load->view('modals/modal_edit_karyawan'); ?> 

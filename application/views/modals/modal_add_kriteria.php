@@ -19,16 +19,6 @@ data-backdrop="static" data-keyboard="false">
                         </div>
                     </div>
 
-                    <!-- <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Nilai Bobot</label>
-                        <div class="input-group mb-2 mr-sm-2 col-sm-4">
-                            <input type="number" class="form-control" name="n_bobot" min="0" max="100">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">%</div>
-                            </div>
-                        </div>
-                    </div> -->
-
                     <div class="form-group row">
                         <label class="col-sm-4 col-form-label" for="inlineFormCustomSelectPref">Jenis Kriteria</label>
                         <div class="col-sm-4">
@@ -47,7 +37,7 @@ data-backdrop="static" data-keyboard="false">
                 <div class="modal-footer">
                     <div class="form-group row d-flex justify-content-center">
                         <div class="col">
-                            <button type="submit" class="btn btn-primary align-self-center">
+                            <button type="submit" id="conf" class="btn btn-primary align-self-center">
                                 Simpan <i class="fas fa fa-save"></i>
                             </button>
                             <button data-dismiss="modal" class="btn btn-warning">

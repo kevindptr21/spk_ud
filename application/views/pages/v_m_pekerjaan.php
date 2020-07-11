@@ -42,4 +42,4 @@
         </table>
     </div>
 </div>
-<? $this->load->view('modals/modal_add_pekerjaan'); ?>
+<?php $this->load->view('modals/modal_add_pekerjaan'); ?>

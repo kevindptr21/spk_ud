@@ -18,21 +18,26 @@
                             <th scope="col">Aksi</th>
                     </thead>
                     <tbody>
-                    <? 
+                    <?php 
                     $no = 1;
-                    foreach($karyawan as $k) {
-                        $d1 = new DateTime($k['tgl_awal_bekerja']);
+                    foreach($getKaryawan as $ck) {
+                        $d1 = new DateTime($ck['tgl_awal_bekerja']);
                         $d2 = new DateTime(date("d-m-Y"));
                         $diff = $d1->diff($d2);
                         $months = $diff->format('%y') * 12 + $diff->format('%m');
+                        $id = $ck['id_karyawan'];
+                        $nama = $ck['nama_karyawan'];
                         echo '<tr>
                             <th>'.$no++.'</th>
-                            <td>'.$k['nama_karyawan'].'</td>
-                            <td>'.$k['jenis_kelamin'].'</td>
-                            <td>'.$k['nama_pekerjaan'].'</td>
+                            <td>'.$ck['nama_karyawan'].'</td>
+                            <td>'.$ck['jenis_kelamin'].'</td>
+                            <td>'.$ck['nama_pekerjaan'].'</td>
                             <td id="mk">'.$months.' Bulan</th>
                             <td>
-                                <a>Yuk Dipilih Yuk</a>
+                                <a class="btn btn-success text-light" data-dismiss="modal" 
+                                onclick="getDataFromModal(`'.$id.'`,`'.$nama.'`,`'.$months.'`)">
+                                    Pilih
+                                </a>
                             </td>
                         </tr>';
                     }

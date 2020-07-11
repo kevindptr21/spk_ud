@@ -5,7 +5,8 @@ class M_Pekerjaan extends CI_Model {
 
     public function getListPekerjaan()
     {
-        $this->db->from('pekerjaan');
-        return $this->db->get()->result_array();
+        return $this->db
+        ->from('pekerjaan')
+        ->get()->result_array();
     }
 }

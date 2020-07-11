@@ -24,7 +24,20 @@ function swalConfirm(table,id,name){
         dangerMode: true,
     }).then(function(isConfirm) {
         if (isConfirm) {
+            const showLoading2 = function() {                  
+                swal({
+                    icon:'../../assets/images/Loading-.gif',
+                    button:false,
+                    closeOnEsc:false,
+                    closeOnClickOutside: false,
+                    timer: 2000,
+                    onOpen: () => {
+                        swal.showLoading2();
+                    }
+                })
+            };
             try {
+                showLoading2();
                 window.location.href = window.location.origin + window.location.pathname + 
                 "/" + methodName + "/" +id;
             }catch (err) {

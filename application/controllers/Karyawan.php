@@ -4,12 +4,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Karyawan extends CI_Controller {
 
 	function __construct(){
+
         parent::__construct();
+		if($this->session->userdata('login') == false){
+			redirect('auth');
+        }
 		$this->load->model('M_Karyawan');
 		$this->load->model('M_Pekerjaan');
-		if($this->session->userdata('login') == false){
-            redirect('auth');
-        }
 	}
 
 	public function index(){
@@ -38,3 +39,4 @@ class Karyawan extends CI_Controller {
 		$this->validateNewWorker($data);
 	}
 }
+?>

@@ -18,7 +18,9 @@ class Auth extends CI_Controller {
 		$uname = $this->input->post('uname');
 		$pass = md5($this->input->post('pass'));
 		$data = $this->M_Auth->isLogin($uname,$pass);
+		
 		if($data != null){
+
 			$sessData = array (
 				'login' => true,
 				'name' => $data[0]['nama_user'],
@@ -32,7 +34,6 @@ class Auth extends CI_Controller {
 			$this->session->set_flashdata('errMsg','Username dan Password Tidak Cocok.');
 			redirect('auth');
 		}
-		
 	}
 
 	public function logout(){

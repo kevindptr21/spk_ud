@@ -10,58 +10,96 @@
     <script src="<?php echo base_url() ?>assets/js/bootstrap.datepicker.min.js"></script>
     <script src="<?php echo base_url() ?>assets/svg-with-js/js/fontawesome-all.min.js"></script>
     
-    <script type="text/javascript">
+    <script lang="javascript">
         $(document).ready(function() {
             $('#mydata').DataTable();
+            $('#karyawan').DataTable();
             $('#searchKaryawan').DataTable();
         });
-        // var errMsg = '<small class="text-danger">Hanya Huruf Alphabet. (a-z)</small>';
-        // for(var i=1; i<length;i++){
-        //     var inputN = document.getElementById(`${i}`);
-        //     inputN.oninvalid = function(){
-        //         document.getElementById("errMsg").innerHTML = errMsg;
-        //     }
-            
-        // }
 
-        // var inputN = document.getElementById('namaKr1');
+        function dateChange() {
+            var tgl = document.getElementById("tglInput").value;
+            var res = tgl.replace("/","-").replace("/","-");
+            document.getElementById('tglInput').value = res;
+        };
         
-        // inputN.oninvalid = function(e){
-        //     console.log(e.target.value);
-        // }
+        function getDataFromModal(a,b,c){
+            document.getElementById('id').value = a;
+            document.getElementById('nama').value = b;
+            document.getElementById('nk').value = c;
+        }
     </script>
-
-    <?php if(!empty($this->session->flashdata('success'))) { ?>
-        <script lang="javascript">
-            $(document).ready(function () {
-                swal("Success!", "<?php echo $this->session->flashdata('success')?>","success");
+    <?php if($_SERVER["REQUEST_URI"] === "/penilaian"){ ?>
+    <script lang="javascript">
+        $("#ajax").on('click', function(e){
+            e.preventDefault();
+            $("#cari").hide();
+            $("#sbmt").html("Simpan <i class='fas fa fa-save'></i>")
+            .removeClass('btn btn-primary mr-5 btn-md align-self-center')
+            .addClass('btn btn-success mr-5 btn-md align-self-center');
+            $("#frm").attr('action','<?php base_url()?>penilaian/changePenilaian');
+            
+            $.ajax({
+                url: "<?php base_url()?>penilaian/editAjax/"+$(this).attr('data-value'),
+                type: "GET",
+                cache: false,
+                dataType: "json",
             })
-        </script>
-        
-    <?php } else if(!empty($this->session->flashdata('errMsg'))){ ?>
-        <script lang="javascript">
-            $(document).ready(function () {
-                swal("Kesalahan!", "<?php echo $this->session->flashdata('errMsg')?>","error");
+            .done(function(res) {
+                console.log(res);
+                // var lgth = <?= count($kriteria); ?>;
+                // $("#nama").val(res[0].nama_karyawan);
+                // for(var i=1; i<=lgth; i++){
+                //     $(`#s${i} option[value=${res[0].C,i}]`).attr('selected', 'selected');
+                //     $('#nk').val(res[0].C7);
+                //     $('#nk2').val(res[0].C2);
+                // }    
             });
-        </script>
 
-    <?php } else if(!empty($this->session->flashdata('errAddKriteria'))){ ?>
-        <script lang="javascript">
-            $(document).ready(function () {
-                swal("Kesalahan!", "<?php echo $this->session->flashdata('errAddKriteria')?>","error");
-                $("#openAddKriteria").trigger('click');
+            $("#btl").on('click',function(){
+                window.location.replace('<?php base_url();?>penilaian');
             });
-        </script>
-
-    <?php } else if(!empty($this->session->flashdata('errEditKriteria'))){ ?>
-        <script lang="javascript">
-            $(document).ready(function () {
-                swal("Kesalahan!", "<?php echo $this->session->flashdata('errEditKriteria')?>","error");
-                $("#openEditKriteria").trigger('click');
-            });
-        </script>
+        });
+    </script>
     <?php } ?>
 
+    <script lang="javascript">
+    
+    <?php if(!empty($this->session->flashdata('success'))) { ?>
+        swal("Success!", "<?php echo $this->session->flashdata('success');?>","success");
+        
+    <?php } else if(!empty($this->session->flashdata('errMsg'))){ ?>
+        swal("Kesalahan!", "<?php echo $this->session->flashdata('errMsg');?>","error");
+
+    <?php } else if(!empty($this->session->flashdata('errAddKriteria'))){ ?>
+        swal("Kesalahan!", "<?php echo $this->session->flashdata('errAddKriteria');?>","error");
+        $("#openAddKriteria").trigger('click');
+
+    <?php } else if(!empty($this->session->flashdata('errEditKriteria'))){ ?>
+        swal("Kesalahan!", "<?php echo $this->session->flashdata('errEditKriteria');?>","error");
+        $("#openEditKriteria").trigger('click');
+
+    <?php } else { } ?>
+
+    const showLoading = function() {
+    swal({
+        icon: '<?php base_url()?>assets/images/Loading-.gif',
+        button:false,
+        closeOnEsc:false,
+        closeOnClickOutside: false,
+        timer: 2000,
+        onOpen: () => {
+            swal.showLoading();
+        }
+    })
+    };
+
+    document.getElementById("conf")
+    .addEventListener('click', (event) => {
+        showLoading();
+        $("#addKriteria").hide();
+    });
+    </script>
 </body>
 
 </html>
