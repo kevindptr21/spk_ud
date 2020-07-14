@@ -15,6 +15,7 @@
             $('#mydata').DataTable();
             $('#karyawan').DataTable();
             $('#searchKaryawan').DataTable();
+            $('.invalid-feedback').show();
         });
 
         function dateChange() {
@@ -29,42 +30,64 @@
             document.getElementById('nk').value = c;
         }
     </script>
+
     <?php if($_SERVER["REQUEST_URI"] === "/penilaian"){ ?>
     <script lang="javascript">
-        $("#ajax").on('click', function(e){
+        $(document).ready(function () {
+            var tgl = $("#tgl").val();
+            getAjax(tgl);
+            $("#tgl").on('change',function(e){
+                e.preventDefault();
+                getAjax($(this).val());
+            });
+        });
+
+        $("#ST").on('change', function(e) {
             e.preventDefault();
-            $("#cari").hide();
-            $("#sbmt").html("Simpan <i class='fas fa fa-save'></i>")
-            .removeClass('btn btn-primary mr-5 btn-md align-self-center')
-            .addClass('btn btn-success mr-5 btn-md align-self-center');
-            $("#frm").attr('action','<?php base_url()?>penilaian/changePenilaian');
-            
             $.ajax({
-                url: "<?php base_url()?>penilaian/editAjax/"+$(this).attr('data-value'),
+                url: "<?php base_url()?>penilaian/SmartTopsis",
                 type: "GET",
                 cache: false,
                 dataType: "json",
+            }).done(function (data){
+                console.log(data);
             })
-            .done(function(res) {
-                console.log(res);
-                // var lgth = <?= count($kriteria); ?>;
-                // $("#nama").val(res[0].nama_karyawan);
-                // for(var i=1; i<=lgth; i++){
-                //     $(`#s${i} option[value=${res[0].C,i}]`).attr('selected', 'selected');
-                //     $('#nk').val(res[0].C7);
-                //     $('#nk2').val(res[0].C2);
-                // }    
-            });
+        })
 
-            $("#btl").on('click',function(){
-                window.location.replace('<?php base_url();?>penilaian');
+        function getAjax (id){
+            $.ajax({
+            url: "<?php base_url()?>penilaian/getDataAjax/"+id,
+            type: "GET",
+            cache: false,
+            dataType: "json",
+            }).done(function(data){
+                var no=1;
+                var dataTables = "";
+                if(data.length != 0){
+                    $.each(data, function(key, value){
+                        dataTables += `
+                        <tr>
+                            <td>${no++}</td>
+                            <td>${value['nama_karyawan']}</td>
+                            <td>Ubah</td>
+                        </tr>` ;
+                    })
+                }else {
+                    dataTables +=`
+                    <tr>
+                        <td colspan=3 align="center">No data available in table</td>
+                    </tr>` ;
+                }
+                document.getElementById('lstPenilaian').innerHTML = dataTables;
+
             });
-        });
+        }
+        
     </script>
     <?php } ?>
 
-    <script lang="javascript">
-    
+    <!-- Alert -->
+    <script lang="javascript">    
     <?php if(!empty($this->session->flashdata('success'))) { ?>
         swal("Success!", "<?php echo $this->session->flashdata('success');?>","success");
         
@@ -80,26 +103,31 @@
         $("#openEditKriteria").trigger('click');
 
     <?php } else { } ?>
-
-    const showLoading = function() {
-    swal({
-        icon: '<?php base_url()?>assets/images/Loading-.gif',
-        button:false,
-        closeOnEsc:false,
-        closeOnClickOutside: false,
-        timer: 2000,
-        onOpen: () => {
-            swal.showLoading();
-        }
-    })
-    };
-
-    document.getElementById("conf")
-    .addEventListener('click', (event) => {
-        showLoading();
-        $("#addKriteria").hide();
-    });
     </script>
+
+    <!-- Loading -->
+    <?php if($_SERVER["REQUEST_URI"] === "/kriteria"){ ?>
+    <script lang="javascript">
+        const showLoading = function() {
+            swal({
+                icon: '<?php base_url()?>assets/images/Loading-.gif',
+                button:false,
+                closeOnEsc:false,
+                closeOnClickOutside: false,
+                timer: 2000,
+                onOpen: () => {
+                    swal.showLoading();
+                }
+            })
+        };
+
+        document.getElementById("conf")
+        .addEventListener('click', (event) => {
+            showLoading();
+            $("#addKriteria").hide();
+        });
+    </script>
+    <?php } ?>
 </body>
 
 </html>

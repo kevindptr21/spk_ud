@@ -8,18 +8,30 @@ data-backdrop="static" data-keyboard="false">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="" method="post">
+            <form action="<?php base_url();?>pekerjaan/addPekerjaan" method="post">
                 <div class="modal-body">
                     <div class="form-group row">
                         <label class="col-sm-4 col-form-label">Nama Pekerjaan</label>
                         <div class="col">
-                            <input type="text" class="form-control">
+                            <input 
+                                type="text" 
+                                name="nama" 
+                                class="form-control" >
                         </div>
                     </div>
                 </div>
+
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <div class="form-group row d-flex justify-content-center">
+                        <div class="col">
+                            <button type="submit" id="conf" class="btn btn-primary align-self-center">
+                                Simpan <i class="fas fa fa-save"></i>
+                            </button>
+                            <button data-dismiss="modal" class="btn btn-warning">
+                                Batal <i class="fas fa fa-window-close"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
             </form>

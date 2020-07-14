@@ -1,15 +1,17 @@
 <nav class="pt-4 pl-2 bg-primary">
     <div class="nav nav-tabs tabs-text" id="nav-tab" role="tablist">
-        <a class="nav-item nav-link active" id="nav-karyawan-tab" data-toggle="tab" href="#nav-karyawan" role="tab" aria-controls="nav-karyawan" aria-selected="true">
+        <a class="nav-item nav-link active" id="nav-karyawan-tab" data-toggle="tab" href="#nav-karyawan" 
+        role="tab" aria-controls="nav-karyawan" aria-selected="true">
             <img src="<? echo base_url() ?>assets/icons/outline_people_alt_black_18dp.png" /> Data Karyawan
         </a>
-        <a class="nav-item nav-link" id="nav-tambahKaryawan-tab" data-toggle="tab" href="#nav-tambahKaryawan" role="tab" aria-controls="nav-tambahKaryawan" aria-selected="false">
+        <a class="nav-item nav-link" id="nav-tambahKaryawan-tab" data-toggle="tab" href="#nav-tambahKaryawan" 
+        role="tab" aria-controls="nav-tambahKaryawan" aria-selected="false">
             <img src="<? echo base_url() ?>assets/icons/outline_person_add_black_18dp.png" /> Tambah Karyawan
         </a>
     </div>
 </nav>
 
-<div class="tab-content pt-5 container" id="nav-tabContent">
+<div class="tab-content pt-4 container" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-karyawan" role="tabpanel" aria-labelledby="nav-karyawan-tab">
         <table class="table table-striped tk" id="karyawan">
             <thead class="thead-dark">
@@ -38,7 +40,8 @@
                             data-target="#editKaryawan'.$k['id_karyawan'].'">
                                 Ubah
                             </button>
-                            <a class="btn btn-danger btn-sm text-light" data-toggle="modal" data-target="#alertWarning'.$k['id_karyawan'].'">
+                            <a class="btn btn-danger btn-sm text-light" 
+                            onclick="swalConfirm(`karyawan`,`'.$k['id_karyawan'].'`,`'.$k['nama_karyawan'].'`);">
                                 Hapus
                             </a>
                         </td>
@@ -54,13 +57,25 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Nama Karyawan</label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" name="nama" required>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        name="nama" 
+                        pattern="(\S+).([A-z]{0,25})|(\S+).([A-z]{0,25}([ ])[A-z]{0,25})" 
+                        required />
+                    <div class="invalid-feedback">*Harus Diisi</div>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Alamat</label>
                 <div class="col-sm-3">
-                    <textarea name="alamat" cols="10" rows="5" class="form-control" required></textarea>
+                    <textarea 
+                        name="alamat" 
+                        cols="10" 
+                        rows="5" 
+                        class="form-control" 
+                        required ></textarea>
+                    <div class="invalid-feedback">*Harus Diisi</div>
                 </div>
             </div>
             <fieldset class="form-group">
@@ -68,13 +83,23 @@
                     <legend class="col-form-label col-sm-2 pt-0">Jenis Kelamin</legend>
                     <div class="col-sm-10">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="jk" value="Laki-Laki" checked required>
+                            <input 
+                                class="form-check-input" 
+                                type="radio" 
+                                name="jk" 
+                                value="Laki-Laki" 
+                                checked required >
                             <label class="form-check-label" for="gridRadios1">
                                 Laki-Laki
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="jk" value="Perempuan" required>
+                            <input 
+                                class="form-check-input" 
+                                type="radio" 
+                                name="jk" 
+                                value="Perempuan" 
+                                required >
                             <label class="form-check-label" for="gridRadios2">
                                 Perempuan
                             </label>
@@ -85,7 +110,13 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Tanggal Diterima</label>
                 <div class="input-group mb-2 mr-sm-2 col-sm-3 date" data-provide="datepicker">
-                    <input type="text" class="form-control" id="tglInput" onchange="dateChange()" name="tgl" required>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="tglInput" 
+                        onchange="dateChange()" 
+                        name="tgl" 
+                        required >
                     <div class="input-group-prepend">
                         <div class="input-group-text">
                             <i class="fas fa-calendar input-prefix" tabindex=0></i>
@@ -96,7 +127,10 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="inlineFormCustomSelectPref">Pekerjaan</label>
                 <div class="col-sm-3">
-                    <select class="custom-select my-1 mr-sm-2" name="pekerjaan" required>
+                    <select 
+                        class="custom-select my-1 mr-sm-2" 
+                        name="pekerjaan" 
+                        required >
                         <?php
                         foreach($pekerjaan as $p){
                             echo '<option value="'.$p['id_pekerjaan'].'">

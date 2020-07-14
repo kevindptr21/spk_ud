@@ -9,12 +9,12 @@ data-backdrop="static" data-keyboard="false">
                 </button>
             </div>
 
-            <form method="post" action="<? base_url()?>kriteria/addKriteria">
+            <form method="post" action="<?php base_url()?>kriteria/addKriteria">
                 <div class="modal-body">
                     <div class="form-group row">
                         <label class="col-sm-4 col-form-label">Nama Kriteria</label>
                         <div class="col">
-                            <input type="text" class="form-control" name="n_kriteria" required 
+                            <input type="text" class="form-control" name="n_kriteria"
                             value="<?php echo $this->session->flashdata('nama') ?  $this->session->flashdata('nama') : '' ?>">
                         </div>
                     </div>
@@ -27,6 +27,20 @@ data-backdrop="static" data-keyboard="false">
                                 <? 
                                 foreach($jenis as $j) {
                                     echo '<option value="'.$j.'">'.$j.'</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label" for="inlineFormCustomSelectPref">Tipe Kriteria</label>
+                        <div class="col-sm-4">
+                            <select class="custom-select my-1 mr-sm-2" name="t_kriteria">
+                                <option selected value="0">Pilih</option>
+                                <? 
+                                foreach($tipe as $t) {
+                                    echo '<option value="'.$t.'">'.$t.'</option>';
                                 }
                                 ?>
                             </select>

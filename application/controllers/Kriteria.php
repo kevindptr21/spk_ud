@@ -12,6 +12,7 @@ class Kriteria extends CI_Controller {
 	}
 
 	public function index(){
+        $data['tipe'] = array('Benefit','Cost');
         $data['jenis'] = array('Kuantitatif','Kualitatif');
 		$data['kriteria'] = $this->M_Kriteria->getListKriteria();
         $this->load->view('template/header');
@@ -23,18 +24,27 @@ class Kriteria extends CI_Controller {
     private function validation($params,$data) {
         if($params == "add"){
             $val = $this->M_Kriteria->getKriteriaName($data['nama']);
-
-            if($val == null && $data['jenis'] != "0"){
-                $this->M_Kriteria->insertKriteria($data);
-                $this->session->set_flashdata('success','Kriteria Berhasil Ditambahkan');
-
-            }else if($data['jenis'] == "0") {
-                $this->session->set_flashdata('errAddKriteria','Harus Memilih Jenis Kriteria!');
-                $this->session->set_flashdata('nama',$data['nama']);
+            if($val == null || count($val) == 0){
+                if($data['jenis'] != "0" && $data['tipe'] != "0"){
+                    $this->M_Kriteria->insertKriteria($data);
+                    $this->session->set_flashdata('success','Kriteria Berhasil Ditambahkan');
+    
+                }else if($data['jenis'] == "0" && $data['tipe'] != "0") {
+                    $this->session->set_flashdata('errAddKriteria','Harus Memilih Jenis Kriteria!');
+                    $this->session->set_flashdata('nama',$data['nama']);
+    
+                }else if($data['jenis'] != "0" && $data['tipe'] == "0") {
+                    $this->session->set_flashdata('errAddKriteria','Harus Memilih Tipe Kriteria!');
+                    $this->session->set_flashdata('nama',$data['nama']);
+                }else {
+                    $this->session->set_flashdata('errAddKriteria','Harus Memilih Jenis dan Tipe Kriteria!');
+                    $this->session->set_flashdata('nama',$data['nama']);
+                }
 
             }else{
                 $this->session->set_flashdata('errAddKriteria','Kriteria '.$data['nama']." Telah Tersedia");
             }
+
 
         } else if($params == "change"){
             $bobotValue = 0;
@@ -42,14 +52,20 @@ class Kriteria extends CI_Controller {
 
             for($i=0;$i<count($data['nilai']);$i++){
 
-                if($data['jenis'][$i] == "0" && $data['nama'][$i] != ""){
-                    $this->session->set_flashdata('errEditKriteria',"Harus Memilih Jenis Kriteria");
+                if(($data['jenis'][$i] == "0") && ($data['nama'][$i] != "") && ($data['tipe'][$i] == "0")){
+                    $this->session->set_flashdata('errEditKriteria',"Harus Memilih Jenis dan Tipe Kriteria!");
                     $complete = $complete - 1;
-                }else if($data['jenis'][$i] != "0" && $data['nama'][$i] == ""){
-                    $this->session->set_flashdata('errEditKriteria',"Nama Kriteria Tidak Boleh Kosong");
+                }else if(($data['jenis'][$i] != "0") && ($data['nama'][$i] == "") && ($data['tipe'][$i] != "0")){
+                    $this->session->set_flashdata('errEditKriteria',"Nama Kriteria Tidak Boleh Kosong!");
                     $complete = $complete - 1;
-                }else if($data['jenis'][$i] == "0" && $data['nama'][$i] == ""){
-                    $this->session->set_flashdata('errEditKriteria',"Nama dan Jenis Kriteria Harus Terisi");
+                }else if(($data['jenis'][$i] == "0") && ($data['nama'][$i] == "") && ($data['tipe'][$i] == "0")){
+                    $this->session->set_flashdata('errEditKriteria',"Nama, Jenis dan Tipe Kriteria Harus Terisi!");
+                    $complete = $complete - 1;
+                }else if(($data['jenis'][$i] == "0") && ($data['nama'][$i] != "") && ($data['tipe'][$i] != "0")){
+                    $this->session->set_flashdata('errEditKriteria',"Harus Memilih Jenis Kriteria!");
+                    $complete = $complete - 1;
+                }else if(($data['jenis'][$i] != "0") && ($data['nama'][$i] != "") && ($data['tipe'][$i] == "0")){
+                    $this->session->set_flashdata('errEditKriteria',"Harus Memilih Tipe Kriteria!");
                     $complete = $complete - 1;
                 }else{
                     $bobotValue = $bobotValue + $data['nilai'][$i];
@@ -79,9 +95,16 @@ class Kriteria extends CI_Controller {
     public function addKriteria(){
         $data = array(
             'nama' => ucwords($this->input->post('n_kriteria')),
-            'jenis' => $this->input->post('j_kriteria')
+            'jenis' => $this->input->post('j_kriteria'),
+            'tipe' => $this->input->post('t_kriteria'),
         );
-        $this->validation('add',$data);
+        if($data['nama'] != "" || $data['nama'] != null){
+            $this->validation('add',$data);
+        }else {
+            $this->session->set_flashdata('errMsg','Nama Tidak Boleh Kosong!');
+            $this->session->set_flashdata('nama',$data['nama']);
+            redirect('kriteria');
+        }
     }
 
     public function changeKriteria(){
@@ -90,10 +113,10 @@ class Kriteria extends CI_Controller {
             'nama' => $this->input->post('n_kriteria[]'),
             'nilai' => $this->input->post('n_bobot[]'),
             'jenis' => $this->input->post('j_kriteria[]'),
+            'tipe' => $this->input->post('t_kriteria[]'),
         );
 
-        $this->validation('change',$data);
-        
+        $this->validation('change',$data);   
     }
 
     public function deleteKriteria($params){

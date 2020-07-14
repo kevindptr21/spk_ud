@@ -31,8 +31,9 @@
                                 data-target="#editPekerjaan'.$p['id_pekerjaan'].'">
                                 Ubah
                             </button>
-                            <a class="btn btn-danger btn-sm text-light">
-                                Hapus
+                            <a class="btn btn-danger btn-sm text-light" 
+                            onclick="swalConfirm(`pekerjaan`,`'.$p['id_pekerjaan'].'`,`'.$p['nama_pekerjaan'].'`);">
+                            <i class="fas fa fa-trash"></i> Hapus
                             </a>
                         </td>
                     </tr>

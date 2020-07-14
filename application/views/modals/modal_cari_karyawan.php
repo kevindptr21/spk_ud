@@ -18,11 +18,11 @@
                             <th scope="col">Aksi</th>
                     </thead>
                     <tbody>
-                    <?php 
+                    <?php
                     $no = 1;
                     foreach($getKaryawan as $ck) {
                         $d1 = new DateTime($ck['tgl_awal_bekerja']);
-                        $d2 = new DateTime(date("d-m-Y"));
+                        $d2 = new DateTime(date("20-12-2019"));
                         $diff = $d1->diff($d2);
                         $months = $diff->format('%y') * 12 + $diff->format('%m');
                         $id = $ck['id_karyawan'];
@@ -34,12 +34,13 @@
                             <td>'.$ck['nama_pekerjaan'].'</td>
                             <td id="mk">'.$months.' Bulan</th>
                             <td>
-                                <a class="btn btn-success text-light" data-dismiss="modal" 
+                                <button class="btn btn-primary text-light" data-dismiss="modal" 
                                 onclick="getDataFromModal(`'.$id.'`,`'.$nama.'`,`'.$months.'`)">
                                     Pilih
-                                </a>
+                                </button>
                             </td>
-                        </tr>';
+                        </tr>
+                        ';
                     }
                     ?>
                     </tbody>

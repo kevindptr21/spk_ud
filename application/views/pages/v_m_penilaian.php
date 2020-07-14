@@ -1,9 +1,9 @@
 <nav class="pt-4 pl-2 bg-primary">
     <div class="nav nav-tabs tabs-text" id="nav-tab" role="tablist">
-        <a class="nav-item nav-link active" id="nav-penilaian-tab" data-toggle="tab" href="#nav-penilaian" role="tab" aria-controls="nav-penilaian" aria-selected="true">
+        <a class="nav-item nav-link " id="nav-penilaian-tab" data-toggle="tab" href="#nav-penilaian" role="tab" aria-controls="nav-penilaian" aria-selected="true">
             <img src="<? echo base_url() ?>assets/icons/outline_grading_black_18dp.png" /> Form Penilaian
         </a>
-        <a class="nav-item nav-link" id="nav-ST-tab" data-toggle="tab" href="#nav-ST" role="tab" aria-controls="nav-ST" aria-selected="false">
+        <a class="nav-item nav-link active" id="nav-ST-tab" data-toggle="tab" href="#nav-ST" role="tab" aria-controls="nav-ST" aria-selected="false">
             <img src="<? echo base_url() ?>assets/icons/outline_calculate_black_18dp.png" /> Perhitungan SMART-TOPSIS
         </a>
     </div>
@@ -11,20 +11,21 @@
 <div class="tab-content pt-4 container" id="nav-tabContent">
 
     <!-- INPUT NILAI -->
-    <div class="tab-pane fade show active" id="nav-penilaian" role="tabpanel" aria-labelledby="nav-penilaian-tab">
+    <div class="tab-pane fade" id="nav-penilaian" role="tabpanel" aria-labelledby="nav-penilaian-tab">
         <div id="form-penilaian">
             <form id="frm" method="post" action="<? base_url()?>penilaian/testingInput">
                 <div class="form-group row">
                     <label class="col-sm-5 col-form-label">Tanggal Penilaian</label>
                     <div class="col-sm">
-                        <input 
-                            style="width:7em;"
-                            type="text" 
-                            readonly 
-                            class="form-control" 
-                            name="tgl_penilaian" 
-                            value="<?= date('d-m-Y') ?>"
-                        >
+                        <select name="tgl_penilaian" id="tgl" class="form-control col-md-8">
+                            <option selected value="<?= date('d-m-Y') ?>"><?= date('d-m-Y') ?></option?>
+                            <?php
+                            foreach($tgl as $date){
+                                echo '<option value="'.$date['tgl_penilaian'].'">'.$date['tgl_penilaian'].'</option>';
+                            }
+                            ?>
+
+                        </select>
                     </div>
                 </div>
 
@@ -113,26 +114,8 @@
                             <th>Nama Karyawan</th>
                             <th>Aksi</th>
                         </thead>
-                        <tbody>
-                            <?php if(count($penilaian) == null) { ?>
-                                
-                            <?php } else { 
-                                $no = 1;
-                                foreach($penilaian as $cc){ ?>
-                                    <tr>
-                                        <td><?= $no++ ?></td>
-                                        <td><?= $cc['nama_karyawan']; ?></td>
-                                        <td style="width: 120px;">
-                                            <a class="btn btn-sm btn-warning" id="ajax"
-                                            data-value="<?php echo $cc['id_penilaian']; ?>">
-                                                Ubah
-                                            </a>
-                                            <a class="btn btn-sm btn-danger text-light">Hapus</a>
-                                        </td>
-                                    </tr>
-
-                                <?php } 
-                            } ?>
+                        <tbody id="lstPenilaian">
+                            
                         </tbody>
                     </table>
                 </div>
@@ -142,8 +125,8 @@
     </div>
 
     <!-- PERHITUNGAN -->
-    <div class="tab-pane fade" id="nav-ST" role="tabpanel" aria-labelledby="nav-ST-tab">
-        <h1>PERHITUNGAN SMART-TOPSIS</h1>
+    <div class="tab-pane fade show active" id="nav-ST" role="tabpanel" aria-labelledby="nav-ST-tab">
+        <?php $this->load->view('pages/SMART_TOPSIS');?>
     </div>
 
 </div>

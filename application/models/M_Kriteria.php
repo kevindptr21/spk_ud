@@ -72,7 +72,8 @@ class M_Kriteria extends CI_Model {
             CREATE TABLE penilaian (
             id_penilaian  INTEGER PRIMARY KEY AUTOINCREMENT,
             id_karyawan   VARCHAR (4) REFERENCES karyawan (id_karyawan),
-            tgl_penilaian DATE )");
+            tgl_penilaian DATE,
+            id_user VARCHAR (2) )");
 
             $this->db->query("
             INSERT INTO penilaian (
@@ -81,14 +82,16 @@ class M_Kriteria extends CI_Model {
             tgl_penilaian )
             SELECT id_penilaian,
             id_karyawan,
-            tgl_penilaian FROM temp_table; ");
+            tgl_penilaian,
+            id_user FROM temp_table; ");
 
         }else{
             $qs1 = "
             CREATE TABLE penilaian (
             id_penilaian  INTEGER PRIMARY KEY AUTOINCREMENT,
             id_karyawan   VARCHAR (4) REFERENCES karyawan (id_karyawan),
-            tgl_penilaian DATE,";
+            tgl_penilaian DATE,
+            id_user VARCHAR (2), ";
             
             for($i=1;$i <= $length;$i++){
                 if($i < $length){
@@ -100,32 +103,51 @@ class M_Kriteria extends CI_Model {
             }
 
             $this->db->query($qs1.implode("",$data));
-            $qsInsert1 = "
-            INSERT INTO penilaian (
+
+            $length2 = count($this->getListKriteria())-1;
+            if($length2 == 0){
+                $qsInsert0 = "
+                INSERT INTO penilaian (
+                    id_penilaian,
+                    id_karyawan,
+                    tgl_penilaian,
+                    id_user )
+                    SELECT id_penilaian,
+                    id_karyawan,
+                    tgl_penilaian,
+                    id_user FROM temp_table ;
+                ";
+                $this->db->query($qsInsert0);
+
+            }else{
+                $qsInsert1 = "
+                INSERT INTO penilaian (
                 id_penilaian,
                 id_karyawan,
                 tgl_penilaian,
-            ";
-            $qsInsert2 = "
-            SELECT id_penilaian,
+                id_user, 
+                ";
+                $qsInsert2 = "
+                SELECT id_penilaian,
                     id_karyawan,
                     tgl_penilaian,
-            ";
-            $qsInsert3 = " FROM temp_table ;";
+                    id_user, 
+                ";
+                $qsInsert3 = " FROM temp_table ;";
 
-            $length2 = count($this->getListKriteria())-1;
-            for($i=1;$i <= $length2;$i++){
-                if($i < $length2){
-                    $data2[$i] = "C$i, ";
-                    $data3[$i] = "C$i, ";
-                }else{
-                    $data2[$i] = "C$i ) ";
-                    $data3[$i] = "C$i ";
+                for($i=1;$i <= $length2;$i++){
+                    if($i < $length2){
+                        $data2[$i] = "C$i, ";
+                        $data3[$i] = "C$i, ";
+                    }else{
+                        $data2[$i] = "C$i ) ";
+                        $data3[$i] = "C$i ";
+                    }    
                 }
-                
+
+                $this->db->query($qsInsert1.implode("",$data2).$qsInsert2.implode("",$data3).$qsInsert3);
             }
 
-            $this->db->query($qsInsert1.implode("",$data2).$qsInsert2.implode("",$data3).$qsInsert3);
         }
         $this->db->query("DROP TABLE temp_table");
         $this->db->query("PRAGMA foreign_keys = 1");
@@ -138,6 +160,7 @@ class M_Kriteria extends CI_Model {
             'nama_kriteria' => ucwords($params['nama']),
             'nilai_bobot' => 0,
             'jenis_kriteria' => $params['jenis'],
+            'tipe_kriteria' => $params['tipe'],
             'id_user' => $this->session->userdata('user code')
         );
 
@@ -153,6 +176,7 @@ class M_Kriteria extends CI_Model {
             ->set('nama_kriteria',ucwords($data['nama'][$i]))
             ->set('nilai_bobot',$data['nilai'][$i])
             ->set('jenis_kriteria',$data['jenis'][$i])
+            ->set('tipe_kriteria',$data['tipe'][$i])
             ->set('id_user',$this->session->userdata('user code'))
             ->where('id_kriteria',$data['id'][$i])
             ->update('kriteria');
@@ -169,23 +193,27 @@ class M_Kriteria extends CI_Model {
             CREATE TABLE penilaian (
             id_penilaian  INTEGER PRIMARY KEY AUTOINCREMENT,
             id_karyawan   VARCHAR (4) REFERENCES karyawan (id_karyawan),
-            tgl_penilaian DATE )");
+            tgl_penilaian DATE,
+            id_user VARCHAR (2) )");
 
             $this->db->query("
             INSERT INTO penilaian (
             id_penilaian,
             id_karyawan,
-            tgl_penilaian )
+            tgl_penilaian,
+            id_user )
             SELECT id_penilaian,
             id_karyawan,
-            tgl_penilaian FROM temp_table; ");
+            tgl_penilaian,
+            id_user FROM temp_table; ");
 
         }else{
             $qs1 = "
             CREATE TABLE penilaian (
             id_penilaian  INTEGER PRIMARY KEY AUTOINCREMENT,
             id_karyawan   VARCHAR (4) REFERENCES karyawan (id_karyawan),
-            tgl_penilaian DATE,";
+            tgl_penilaian DATE,
+            id_user VARCHAR (2), ";
             
             for($i=1;$i<=$length;$i++){
                 if($i < $length){
@@ -202,11 +230,13 @@ class M_Kriteria extends CI_Model {
                 id_penilaian,
                 id_karyawan,
                 tgl_penilaian,
+                id_user,
             ";
             $qsInsert2 = "
             SELECT id_penilaian,
                     id_karyawan,
                     tgl_penilaian,
+                    id_user,
             ";
             $qsInsert3 = " FROM temp_table ;";
             for($i=1;$i<=$length;$i++){

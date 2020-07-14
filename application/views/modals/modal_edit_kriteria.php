@@ -1,6 +1,6 @@
 <div class="modal fade" id="editKriteria" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
 data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-dark">
                 <h5 class="modal-title text-light" id="exampleModalCenterTitle">Ubah Data Kriteria</h5>
@@ -23,11 +23,6 @@ data-backdrop="static" data-keyboard="false">
                                 name="n_kriteria[]" 
                                 value="<?= $mk['nama_kriteria'] ?>"
                             >
-                            <div id="errMsg">
-                                <!-- <small class="text-success">
-                                    Hanya Huruf Alphabet. (a-z)
-                                </small> -->
-                            </div>
 
                         </div>
                         <div class="input-group col">
@@ -51,6 +46,20 @@ data-backdrop="static" data-keyboard="false">
                                 ?>
                             </select>
                         </div>
+                        <div class="input-group col">
+                            <select class="custom-select my-1 " name="t_kriteria[]">
+                                <option selected value="0">Pilih</option>
+                                <? 
+                                foreach($tipe as $t) {
+                                    if($mk['tipe_kriteria'] == $t) {
+                                        echo '<option value="'.$t.'" selected>'.$t.'</option>';
+                                    }else {
+                                        echo '<option value="'.$t.'">'.$t.'</option>';
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
                         
                     </div>
                     <? } ?>
@@ -58,7 +67,7 @@ data-backdrop="static" data-keyboard="false">
             <div class="modal-footer">
                 <div class="form-group row d-flex justify-content-center">
                     <div class="col">
-                        <button type="submit" class="btn btn-primary align-self-center">
+                        <button type="submit" id="conf" class="btn btn-primary align-self-center">
                             Simpan <i class="fas fa fa-save"></i>
                         </button>
                         <button data-dismiss="modal" class="btn btn-warning">

@@ -1,5 +1,5 @@
-<? foreach($karyawan as $ke){ ?>
-<div class="modal fade" id="editKaryawan<? echo $ke['id_karyawan']; ?>" tabindex="-1" role="dialog" 
+<?php foreach($karyawan as $ke){ ?>
+<div class="modal fade" id="editKaryawan<?php echo $ke['id_karyawan']; ?>" tabindex="-1" role="dialog" 
 aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -9,19 +9,30 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="stat
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form>
+            <form action="<?php base_url()?>karyawan/changeKaryawan" method="post">
                 <div class="modal-body">
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-4 col-form-label">Nama Karyawan</label>
                         <div class="col">
-                            <input type="text" class="form-control" name="nakar" value="<? echo $ke['nama_karyawan']; ?>">
+                            <input 
+                                type="hidden" 
+                                name="id" 
+                                value="<?= $ke['id_karyawan'];?>" />
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                name="nama" 
+                                value="<?= $ke['nama_karyawan']; ?>" />
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-4 col-form-label">Alamat</label>
                         <div class="col">
-                            <textarea name="alamat" cols="30" rows="5" class="form-control">
-                                <?php echo $ke['alamat']; ?>
+                            <textarea 
+                                name="alamat" 
+                                cols="30" 
+                                rows="5" 
+                                class="form-control" ><?= $ke['alamat']; ?>
                             </textarea>
                         </div>
                     </div>
@@ -30,17 +41,23 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="stat
                             <legend class="col-form-label col-sm-4 pt-0">Jenis Kelamin</legend>
                             <div class="col">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="jk" value="Laki-Laki"
-                                    <? if($ke['jenis_kelamin'] == "Laki-Laki"){ echo "checked";} ?>
-                                    >
+                                    <input 
+                                        class="form-check-input" 
+                                        type="radio" 
+                                        name="jk" 
+                                        value="Laki-Laki"
+                                    <?php if($ke['jenis_kelamin'] == "Laki-Laki"){ echo "checked";} ?> />
                                     <label class="form-check-label" for="gridRadios1">
                                         Laki-Laki
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="jk" value="perempuan"
-                                    <? if($ke['jenis_kelamin'] == "Perempuan"){ echo "checked";} ?>
-                                    >
+                                    <input 
+                                        class="form-check-input" 
+                                        type="radio" 
+                                        name="jk" 
+                                        value="perempuan"
+                                    <?php if($ke['jenis_kelamin'] == "Perempuan"){ echo "checked";} ?> >
                                     <label class="form-check-label" for="gridRadios2">
                                         Perempuan
                                     </label>
@@ -51,7 +68,11 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="stat
                     <div class="form-group row">
                         <label class="col-sm-4 col-form-label">Tanggal Diterima</label>
                         <div class="input-group mb-2 mr-sm-2 col date" data-provide="datepicker">
-                            <input type="text" class="form-control" name="tgl" value="<? echo $ke['tgl_awal_bekerja'] ?>">
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                name="tgl" 
+                                value="<?= $ke['tgl_awal_bekerja'] ?>" />
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
                                     <i class="fas fa-calendar input-prefix" tabindex=0></i>
@@ -62,7 +83,10 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="stat
                     <div class="form-group row">
                         <label class="col-sm-4 col-form-label" for="inlineFormCustomSelectPref">Pekerjaan</label>
                         <div class="col">
-                            <select class="custom-select my-1 mr-sm-2" name="pekerjaan" required>
+                            <select 
+                                class="custom-select my-1 mr-sm-2" 
+                                name="pekerjaan" 
+                                required >
                                 <?php
                                 foreach($pekerjaan as $p){
                                     if($ke['id_pekerjaan'] == $p['id_pekerjaan']){
@@ -96,4 +120,4 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="stat
         </div>
     </div>
 </div>
-<? } ?>
+<?php } ?>
