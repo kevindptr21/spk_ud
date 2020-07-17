@@ -17,8 +17,8 @@ class Penilaian extends CI_Controller {
     public function index(){
         $data['tgl'] = $this->M_Penilaian->getTglPenilaian();
         $data['kriteria'] = $this->M_Kriteria->getListKriteria();
-        // $data['penilaian'] = $this->M_Penilaian->getListPenilaianTgl(date('12-07-2020'));
         $data['getKaryawan'] = $this->M_Karyawan->getListKaryawan();
+
         $this->load->view('template/header');
         $this->load->view('template/body');
         $this->load->view('pages/v_m_penilaian',$data);
@@ -36,15 +36,36 @@ class Penilaian extends CI_Controller {
     }
 
     public function getDataAjax($params){
-        echo json_encode($this->M_Penilaian->getListPenilaianTgl($params));
+        $data = $this->M_Penilaian->getListPenilaianTgl($params);
+        $resJson = array();
+        $no = 1;
+        foreach($data as $d){
+            $resJson[] = array(
+                "no" => $no++,
+                "nama" => $d['nama_karyawan'],
+                "aksi" => '<a data-target="#editPenilaian'.$d['id_karyawan'].'" data-toggle="modal" 
+                class="btn btn-warning btn-sm">
+                    Ubah
+                </a> 
+                <a class="btn btn-danger btn-sm text-light" 
+                onclick="swalConfirm(`penilaian`,`'.$d['id_penilaian'].'`,`'.$d['nama_karyawan'].'`);">
+                    Hapus
+                </a>'
+            );
+        }
+        $response = array(
+            "data" => $resJson,
+        );
+        echo json_encode($response);
     }
 
-    public function SmartTopsis(){
-        echo json_encode($this->M_Penilaian->SMART_TOPSIS());
+    public function smartTopsis($params){
+        $data = array(
+            "kriteria" => $this->M_Kriteria->getListKriteria(),
+            "penilaian" => $this->M_Penilaian->getListPenilaianTgl($params),
+        );
+        echo json_encode($this->M_Penilaian->getSmartTopsis($data));
     }
-
-
-
 }
 
 ?>

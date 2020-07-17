@@ -9,13 +9,17 @@
     <script src="<?php echo base_url() ?>assets/js/datatables.min.js"></script>
     <script src="<?php echo base_url() ?>assets/js/bootstrap.datepicker.min.js"></script>
     <script src="<?php echo base_url() ?>assets/svg-with-js/js/fontawesome-all.min.js"></script>
+    <script src="<?php echo base_url() ?>assets/js/loader.js"></script>
+    <script src="<?php base_url() ?>assets/js/dataAjax.js"></script>
     
     <script lang="javascript">
         $(document).ready(function() {
-            $('#mydata').DataTable();
-            $('#karyawan').DataTable();
+            $('#karyawan').DataTable({
+                scrollY: 340,
+            });
             $('#searchKaryawan').DataTable();
             $('.invalid-feedback').show();
+            
         });
 
         function dateChange() {
@@ -33,56 +37,19 @@
 
     <?php if($_SERVER["REQUEST_URI"] === "/penilaian"){ ?>
     <script lang="javascript">
-        $(document).ready(function () {
-            var tgl = $("#tgl").val();
-            getAjax(tgl);
-            $("#tgl").on('change',function(e){
-                e.preventDefault();
-                getAjax($(this).val());
-            });
-        });
-
-        $("#ST").on('change', function(e) {
+        var tgl = $("#tgl").val();
+        getAjaxPenilaian(tgl);
+        $("#tgl").bind('change',function(e){
             e.preventDefault();
-            $.ajax({
-                url: "<?php base_url()?>penilaian/SmartTopsis",
-                type: "GET",
-                cache: false,
-                dataType: "json",
-            }).done(function (data){
-                console.log(data);
-            })
-        })
-
-        function getAjax (id){
-            $.ajax({
-            url: "<?php base_url()?>penilaian/getDataAjax/"+id,
-            type: "GET",
-            cache: false,
-            dataType: "json",
-            }).done(function(data){
-                var no=1;
-                var dataTables = "";
-                if(data.length != 0){
-                    $.each(data, function(key, value){
-                        dataTables += `
-                        <tr>
-                            <td>${no++}</td>
-                            <td>${value['nama_karyawan']}</td>
-                            <td>Ubah</td>
-                        </tr>` ;
-                    })
-                }else {
-                    dataTables +=`
-                    <tr>
-                        <td colspan=3 align="center">No data available in table</td>
-                    </tr>` ;
-                }
-                document.getElementById('lstPenilaian').innerHTML = dataTables;
-
-            });
-        }
-        
+            getAjaxPenilaian($(this).val());
+        });
+    </script>
+    <script lang="javascript">
+        $("#ST").on('change', function(e) {
+            
+            showLoading();
+            getAjaxST($(this).val());
+        });
     </script>
     <?php } ?>
 
@@ -106,28 +73,15 @@
     </script>
 
     <!-- Loading -->
-    <?php if($_SERVER["REQUEST_URI"] === "/kriteria"){ ?>
+    <!-- <?php if($_SERVER["REQUEST_URI"] === "/kriteria"){ ?> -->
     <script lang="javascript">
-        const showLoading = function() {
-            swal({
-                icon: '<?php base_url()?>assets/images/Loading-.gif',
-                button:false,
-                closeOnEsc:false,
-                closeOnClickOutside: false,
-                timer: 2000,
-                onOpen: () => {
-                    swal.showLoading();
-                }
-            })
-        };
-
         document.getElementById("conf")
         .addEventListener('click', (event) => {
             showLoading();
             $("#addKriteria").hide();
         });
     </script>
-    <?php } ?>
+    <!-- <?php } ?> -->
 </body>
 
 </html>

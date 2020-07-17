@@ -11,6 +11,12 @@ function swalConfirm(table,id,name){
         case "karyawan":
             text = "Data Karyawan Ini Akan Dihapus dari List Karyawan";
         break;
+        case "penilaian":
+            text = "Data Penilaian untuk Karyawan Ini Akan Dihapus dari List Penilaian";
+        break;
+        default:
+            text = "";
+        break;
     }
 
     swal({

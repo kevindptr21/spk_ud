@@ -1,24 +1,24 @@
 <nav class="pt-4 pl-2 bg-primary">
     <div class="nav nav-tabs tabs-text" id="nav-tab" role="tablist">
-        <a class="nav-item nav-link " id="nav-penilaian-tab" data-toggle="tab" href="#nav-penilaian" role="tab" aria-controls="nav-penilaian" aria-selected="true">
-            <img src="<? echo base_url() ?>assets/icons/outline_grading_black_18dp.png" /> Form Penilaian
+        <a class="nav-item nav-link active" id="nav-penilaian-tab" data-toggle="tab" href="#nav-penilaian" role="tab" aria-controls="nav-penilaian" aria-selected="true">
+            <img src="<?php echo base_url() ?>assets/icons/outline_grading_black_18dp.png" /> Form Penilaian
         </a>
-        <a class="nav-item nav-link active" id="nav-ST-tab" data-toggle="tab" href="#nav-ST" role="tab" aria-controls="nav-ST" aria-selected="false">
-            <img src="<? echo base_url() ?>assets/icons/outline_calculate_black_18dp.png" /> Perhitungan SMART-TOPSIS
+        <a class="nav-item nav-link " id="nav-ST-tab" data-toggle="tab" href="#nav-ST" role="tab" aria-controls="nav-ST" aria-selected="false">
+            <img src="<?php echo base_url() ?>assets/icons/outline_calculate_black_18dp.png" /> Perhitungan SMART-TOPSIS
         </a>
     </div>
 </nav>
 <div class="tab-content pt-4 container" id="nav-tabContent">
 
     <!-- INPUT NILAI -->
-    <div class="tab-pane fade" id="nav-penilaian" role="tabpanel" aria-labelledby="nav-penilaian-tab">
+    <div class="tab-pane fade show active" id="nav-penilaian" role="tabpanel" aria-labelledby="nav-penilaian-tab">
         <div id="form-penilaian">
-            <form id="frm" method="post" action="<? base_url()?>penilaian/testingInput">
+            <form id="frm" method="post" action="<?php base_url()?>penilaian/testingInput">
                 <div class="form-group row">
                     <label class="col-sm-5 col-form-label">Tanggal Penilaian</label>
                     <div class="col-sm">
                         <select name="tgl_penilaian" id="tgl" class="form-control col-md-8">
-                            <option selected value="<?= date('d-m-Y') ?>"><?= date('d-m-Y') ?></option?>
+                            <option><?= date('d-m-Y');?></option>
                             <?php
                             foreach($tgl as $date){
                                 echo '<option value="'.$date['tgl_penilaian'].'">'.$date['tgl_penilaian'].'</option>';
@@ -66,7 +66,6 @@
                                 style="width:5em;"
                                 type="number" 
                                 min="0" 
-                                
                                 name="n_penilaian[]"';
                                 if($pk['nama_kriteria'] == "Masa Kerja"){
                                     echo 'id="nk"';
@@ -112,10 +111,9 @@
                         <thead class="thead-dark">
                             <th style="width: 20px;">No</th>
                             <th>Nama Karyawan</th>
-                            <th>Aksi</th>
+                            <th style="width: 100px;">Aksi</th>
                         </thead>
-                        <tbody id="lstPenilaian">
-                            
+                        <tbody id="listPenilaian">
                         </tbody>
                     </table>
                 </div>
@@ -125,8 +123,36 @@
     </div>
 
     <!-- PERHITUNGAN -->
-    <div class="tab-pane fade show active" id="nav-ST" role="tabpanel" aria-labelledby="nav-ST-tab">
-        <?php $this->load->view('pages/SMART_TOPSIS');?>
+    <div class="tab-pane fade" id="nav-ST" role="tabpanel" aria-labelledby="nav-ST-tab">
+        <div class="d-flex flex-row bd-highlight mb-3">
+            <div class="p-2 bd-highlight">
+                <label >Tanggal Penilaian</label>
+            </div>
+            <div class="p-2 bd-highlight">
+                <select id="ST" class="form-control col-md-15">
+                    <option selected>Pilih</option>
+                    <?php foreach($tgl as $dateST){
+                        echo '<option value="'.$dateST['tgl_penilaian'].'">'.$dateST['tgl_penilaian'].'</option>';
+                    } ?>
+                </select>
+            </div>
+
+            <div class="p-2 bd-highlight">
+                <a href="#">
+                    <button 
+                        disabled 
+                        class="btn btn-primary btn-lg text-light">
+                        <i class="fas fa fa-print"></i> Print
+                    </button>
+                </a>
+            </div>
+        </div>
+
+        <div class='mt-3' id="spkST" style="height: 60vh;overflow-y:auto;">
+           
+        </div>
+
+
     </div>
 
 </div>
