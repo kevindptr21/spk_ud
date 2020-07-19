@@ -64,18 +64,19 @@ data-backdrop="static" data-keyboard="false">
                     </div>
                     <? } ?>
                 </div>
-            <div class="modal-footer">
-                <div class="form-group row d-flex justify-content-center">
-                    <div class="col">
-                        <button type="submit" id="conf" class="btn btn-primary align-self-center">
-                            Simpan <i class="fas fa fa-save"></i>
-                        </button>
-                        <button data-dismiss="modal" class="btn btn-warning">
-                            Batal <i class="fas fa fa-window-close"></i>
-                        </button>
+                <div class="modal-footer">
+                    <div class="form-group row d-flex justify-content-center">
+                        <div class="col">
+                            <button type="submit" id="conf" class="btn btn-primary align-self-center">
+                                Simpan <i class="fas fa fa-save"></i>
+                            </button>
+                            <button data-dismiss="modal" class="btn btn-warning">
+                                Batal <i class="fas fa fa-window-close"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>

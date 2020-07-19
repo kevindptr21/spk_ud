@@ -8,6 +8,6 @@
     <input type="password" class="form-control" placeholder="Password" required="" name="pass"> 
     <br/>
     <div class="d-flex justify-content-center">
-        <button class="btn btn-lg btn-primary" type="submit">SIGN IN</button>
+        <button class="btn btn-md btn-primary" type="submit">SIGN IN</button>
     </div>
 </form>

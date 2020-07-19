@@ -8,14 +8,13 @@ class M_Karyawan extends CI_Model {
         return $this->db
         ->from('karyawan t1')
         ->join('pekerjaan t2','t2.id_pekerjaan = t1.id_pekerjaan')
-        // ->order_by('tgl_awal_bekerja')
         ->where('t1.status',1)
         ->get()->result_array();
     }
 
     private function createIncrement(){
         $str = "K";
-        $incrmnt = count($this->getListKaryawan());
+        $incrmnt = $this->db->count_all_results('karyawan');
         if($incrmnt == 0){
             $kd = $str."001";
         }else if($incrmnt < 10){

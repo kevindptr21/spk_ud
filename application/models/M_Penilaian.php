@@ -24,6 +24,14 @@ class M_Penilaian extends CI_Model {
         ->get()->result_array();
     }
 
+    public function getListPenilaianId($params){
+        return $this->db
+        ->from('penilaian t1')
+        ->join('karyawan t2', 't2.id_karyawan = t1.id_karyawan')
+        ->where('id_penilaian',$params)
+        ->get()->result_array();
+    }
+
     public function addPenilaian($data){
         $val = array();
         $no = 1;
@@ -37,6 +45,20 @@ class M_Penilaian extends CI_Model {
             ];
         }
         $this->db->insert('penilaian',$val);
+    }
+
+    public function updatePenilaian($data){
+        $no = 1;
+        for($i=0;$i<count($data['nilai']);$i++){
+            $this->db
+            ->set("C".$no++."",$data['nilai'][$i])
+            ->where('id_penilaian',$data['id_penilaian'])
+            ->update('penilaian');
+        }
+    }
+
+    public function deletePenilaianId($id){
+        return $this->db->delete('penilaian',array('id_penilaian'=>$id));
     }
 
     public function getSmartTopsis($data){

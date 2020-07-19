@@ -13,7 +13,7 @@
     <!-- INPUT NILAI -->
     <div class="tab-pane fade show active" id="nav-penilaian" role="tabpanel" aria-labelledby="nav-penilaian-tab">
         <div id="form-penilaian">
-            <form id="frm" method="post" action="<?php base_url()?>penilaian/testingInput">
+            <form id="frm" method="post" action="<?php base_url()?>penilaian/addPenilaian">
                 <div class="form-group row">
                     <label class="col-sm-5 col-form-label">Tanggal Penilaian</label>
                     <div class="col-sm">
@@ -45,13 +45,13 @@
                         Cari
                     </a>
                 </div>
-                <? foreach ($kriteria as $pk) {
+                <?php foreach ($kriteria as $pk) {
                     echo '<div class="form-group row">
                         <label class="col-sm-5 col-form-label">'.$pk['nama_kriteria'].'</label>
                         <div class="col-sm">';
                         if($pk['jenis_kriteria'] == "Kualitatif"){
-                            echo '
-                            <select name="n_penilaian[]" id="s'.substr($pk['id_kriteria'],1).'" class="form-control" style="width:9em;">
+                            echo '<select name="n_penilaian[]" id="s'.substr($pk['id_kriteria'],1).'" 
+                            class="form-control" style="width:9em;" required>
                                 <option value="0">Pilih</option>
                                 <option value="5">Sangat Baik</option>
                                 <option value="4">Baik</option>
@@ -70,11 +70,11 @@
                                 if($pk['nama_kriteria'] == "Masa Kerja"){
                                     echo 'id="nk"';
                                 }else if($pk['nama_kriteria'] == "Presensi"){
-                                    echo 'id="nk2"';
+                                    echo 'id="nk2" max="310"';
                                 }
                                 echo 'class="form-control" 
-                                value="0"
-                                pattern="[0-9]" 
+                                pattern="[0-9]"
+                                required 
                             />';
                         }
 
@@ -85,7 +85,7 @@
 
                 <div class="form-group row d-flex justify-content-center">
                     <div class="col-md-10 ml-auto">
-                        <button type="submit" id="sbmt" class="btn btn-primary mr-5 btn-md align-self-center">
+                        <button type="submit" id="conf" class="btn btn-primary mr-5 btn-md align-self-center">
                             Tambah <i class="fas fa fa-plus-circle"></i>
                         </button>
                         <button type="reset" id="btl" class="btn btn-warning btn-md">
@@ -138,9 +138,8 @@
             </div>
 
             <div class="p-2 bd-highlight">
-                <a href="#">
+                <a href="<?php base_url()?>penilaian/printToPdf">
                     <button 
-                        disabled 
                         class="btn btn-primary btn-lg text-light">
                         <i class="fas fa fa-print"></i> Print
                     </button>
@@ -158,5 +157,5 @@
 </div>
 
 <?php
-$this->load->view('modals/modal_cari_karyawan'); 
+$this->load->view('modals/modal_edit_penilaian'); 
 ?>

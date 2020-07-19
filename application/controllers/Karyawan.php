@@ -23,66 +23,17 @@ class Karyawan extends CI_Controller {
 	}
 
 	public function addKaryawan(){
-		$filename = base_url().'assets/data.csv';
-		// The nested array to hold all the arrays
-		$the_big_array = []; 
-		// Open the file for reading
-		if (($h = fopen("{$filename}", "r")) !== FALSE) 
-		{
-		// Each line in the file is converted into an individual array that we call $data
-		// The items of the array are comma separated
-		while (($data = fgetcsv($h, 1000, ";")) !== FALSE) 
-		{
-			// Each individual array is being pushed into the nested array
-			$data = str_replace("/","-",$data);
-			$the_big_array[] = $data;
-			// $the_big_array[] = str_replace('L',"Laki-Laki",$data);
-		}
-
-		// Close the file
-		fclose($h);
-		}
-
-		// Display the code in a readable format
-		// echo "<pre>";
-
-		// var_dump($the_big_array);
-		$karyawan = $this->M_Karyawan->getListKaryawan();
-		$str = "K";
-		$incrmnt = count($karyawan);
-		if($incrmnt == 0){
-			$kd = $str."001";
-		}else if($incrmnt < 10){
-			$kd = $str."00".($incrmnt+1);
-		}else if($incrmnt >= 10 && $incrmnt < 100){
-			$kd = $str."0".($incrmnt+1);
-		}else{
-			$kd = $str.($incrmnt+1);
-		}
-		for($i=0;$i<count($the_big_array);$i++){
-			$this->db
-			->set("id_karyawan" ,$kd)
-			->set("nama_karyawan" ,$the_big_array[$i][0])
-			->set("alamat",$the_big_array[$i][2])
-			->set("jenis_kelamin",$the_big_array[$i][1])
-			->set("tgl_awal_bekerja",$the_big_array[$i][6])
-			->set("status",1)
-			->set("id_user",$this->session->userdata('user code'))
-			->set("id_pekerjaan",$the_big_array[$i][5])
-			->get_compiled_insert('karyawan');
-			
-		}
-		// $data = array(
-		// 	"nama" => ucwords($this->input->post('nama')),
-		// 	"alamat" => $this->input->post('alamat'),
-		// 	"jk" => $this->input->post('jk'),
-		// 	"tgl" => $this->input->post('tgl'),
-		// 	"pekerjaan" => $this->input->post('pekerjaan')
-		// );
+		$data = array(
+			"nama" => ucwords($this->input->post('nama')),
+			"alamat" => $this->input->post('alamat'),
+			"jk" => $this->input->post('jk'),
+			"tgl" => $this->input->post('tgl'),
+			"pekerjaan" => $this->input->post('pekerjaan')
+		);
 		
-		// $this->M_Karyawan->insertKaryawan($data);
-		// $this->session->set_flashdata('success',"Berhasil Menambahkan Karyawan");
-		// redirect("karyawan");
+		$this->M_Karyawan->insertKaryawan($data);
+		$this->session->set_flashdata('success',"Berhasil Menambahkan Karyawan");
+		redirect("karyawan");
 	}
 
 	public function changeKaryawan(){

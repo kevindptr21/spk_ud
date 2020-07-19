@@ -16,6 +16,27 @@ function getAjaxPenilaian(id){
     });
 }
 
+function getAjaxEditPenilaian(id){
+    $.ajax({
+        url: window.location.origin + window.location.pathname + 
+        "/getDataAjaxEdit/" + id,
+        type: "GET",
+        cache: false,
+        dataType: "JSON",
+    }).done(function(data){
+        var kriteria = data.kriteria;
+        var penilaian = data.nilai;
+        $("#nkPenilaian").val(penilaian[0]['nama_karyawan']);
+        $("#tglPenilaian").val(penilaian[0]['tgl_penilaian']);
+        $("#idPenilaian").val(penilaian[0]['id_penilaian']);
+        for(var i=0;i<kriteria.length;i++){
+            var id = kriteria[i].id_kriteria
+            $(`#${id}`).val(penilaian[0][id]) 
+        }
+        
+    })
+}
+
 function getAjaxST(tgl){
     document.getElementById('spkST').innerHTML = null;
     $.ajax({
@@ -54,24 +75,24 @@ function getAjaxST(tgl){
         preferentionData(pref,len,"Nilai Preferensi dan Perangkingan");
 
     });
-}5
+}
 
-function getResPenilaian(resPenilaian,resKriteria,valPenilaian,tableName){
+function getResPenilaian(penilaian,kriteria,valPenilaian,tableName){
     var html = `<p class='font-weight-bold'> ${tableName} </p>
     <table class='table table-striped tk'>`;
     html += `<thead class="thead-dark">
         <th scope="col">No</th>
         <th scope="col">Nama Karyawan</th>`;
-    for(var i=0;i<resKriteria.length;i++){
-        html += `<th>${resKriteria[i].id_kriteria}</th>`;
+    for(var i=0;i<kriteria.length;i++){
+        html += `<th>${kriteria[i].id_kriteria}</th>`;
     }
     html += `</thead>
     <tbody>`;
     var no = 1;
-    for(var j = 0; j<resPenilaian.length;j++){
+    for(var j = 0; j<penilaian.length;j++){
         html += `<tr>
         <td>${no++}</td>
-        <td>${resPenilaian[j].nama_karyawan}</td> `;
+        <td>${penilaian[j].nama_karyawan}</td> `;
         for(var k=0;k<valPenilaian.length;k++){
             html += `<td>${valPenilaian[k][j]}</td>`;
         }

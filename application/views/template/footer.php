@@ -5,12 +5,12 @@
     <script src="<?php echo base_url() ?>assets/js/jquery.js"></script>
     <script src="<?php echo base_url() ?>assets/js/popper.min.js"></script>
     <script src="<?php echo base_url() ?>assets/js/bootstrap.min.js"></script>
-    <script src="<?php echo base_url() ?>assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
     <script src="<?php echo base_url() ?>assets/js/datatables.min.js"></script>
     <script src="<?php echo base_url() ?>assets/js/bootstrap.datepicker.min.js"></script>
     <script src="<?php echo base_url() ?>assets/svg-with-js/js/fontawesome-all.min.js"></script>
     <script src="<?php echo base_url() ?>assets/js/loader.js"></script>
     <script src="<?php base_url() ?>assets/js/dataAjax.js"></script>
+    <script src="<?php base_url() ?>assets/js/formValidation.js"></script>
     
     <script lang="javascript">
         $(document).ready(function() {
@@ -18,10 +18,8 @@
                 scrollY: 340,
             });
             $('#searchKaryawan').DataTable();
-            $('.invalid-feedback').show();
-            
         });
-
+        
         function dateChange() {
             var tgl = document.getElementById("tglInput").value;
             var res = tgl.replace("/","-").replace("/","-");
@@ -43,10 +41,7 @@
             e.preventDefault();
             getAjaxPenilaian($(this).val());
         });
-    </script>
-    <script lang="javascript">
-        $("#ST").on('change', function(e) {
-            
+        $("#ST").bind('change', function(e) {
             showLoading();
             getAjaxST($(this).val());
         });
@@ -73,7 +68,6 @@
     </script>
 
     <!-- Loading -->
-    <!-- <?php if($_SERVER["REQUEST_URI"] === "/kriteria"){ ?> -->
     <script lang="javascript">
         document.getElementById("conf")
         .addEventListener('click', (event) => {
@@ -81,7 +75,6 @@
             $("#addKriteria").hide();
         });
     </script>
-    <!-- <?php } ?> -->
 </body>
 
 </html>
