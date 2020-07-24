@@ -27,22 +27,26 @@
             <?
             $no = 1;
             foreach($karyawan as $k) {
-                 
+                 if($k['jenis_kelamin'] == "L"){
+                    $jnsKelamin = "Laki-Laki";
+                 }else {
+                    $jnsKelamin = "Perempuan";
+                 }
                 echo '<tr>
                         <th scope="row">'.$no++.'</th>
                         <td>'.$k['nama_karyawan'].'</td>
                         <td style="width:30%;">'.$k['alamat'].'</td>
-                        <td>'.$k['jenis_kelamin'].'</td>
+                        <td>'.$jnsKelamin.'</td>
                         <td>'.$k['nama_pekerjaan'].'</td>
                         <td>'.$k['tgl_awal_bekerja'].'</td>
                         <td>
                             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" 
                             data-target="#editKaryawan'.$k['id_karyawan'].'">
-                                Ubah
+                                Ubah <i class="fas fa fa-edit"></i>
                             </button>
                             <a class="btn btn-danger btn-sm text-light" 
                             onclick="swalConfirm(`karyawan`,`'.$k['id_karyawan'].'`,`'.$k['nama_karyawan'].'`);">
-                                Hapus
+                                Hapus <i class="fas fa fa-trash"></i>
                             </a>
                         </td>
                     </tr>';
@@ -53,29 +57,26 @@
     </div>
 
     <div class="tab-pane fade" id="nav-tambahKaryawan" role="tabpanel" aria-labelledby="nav-tambahKaryawan-tab">
-        <form method="post" action="<?php base_url()?>karyawan/addKaryawan">
+        <form method="post" action="<?php base_url()?>karyawan/addKaryawan" id="krywn">
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Nama Karyawan</label>
-                <div class="col-sm-5">
+                <div class="col-sm-3">
                     <input 
-                        type="text" 
+                        type="text"
+                        id="krywn_nama" 
                         class="form-control" 
-                        name="nama" 
-                        pattern="(\S+).([A-z]{0,25})|(\S+).([A-z]{0,25}([ ])[A-z]{0,25})" 
-                        required />
-                    <div class="invalid-feedback">*Harus Diisi</div>
+                        name="nama"/>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Alamat</label>
                 <div class="col-sm-3">
                     <textarea 
-                        name="alamat" 
+                        name="alamat"
+                        id="krywn_alamat" 
                         cols="10" 
                         rows="5" 
-                        class="form-control" 
-                        required ></textarea>
-                    <div class="invalid-feedback">*Harus Diisi</div>
+                        class="form-control"></textarea>
                 </div>
             </div>
             <fieldset class="form-group">
@@ -85,24 +86,21 @@
                         <div class="form-check">
                             <input 
                                 class="form-check-input" 
-                                type="radio" 
+                                type="radio"
+                                id="krywn_jk" 
                                 name="jk" 
-                                value="Laki-Laki" 
-                                checked required >
-                            <label class="form-check-label" for="gridRadios1">
-                                Laki-Laki
-                            </label>
+                                value="L" 
+                                checked >
+                            <label class="form-check-label" for="gridRadios1">Laki-Laki</label>
                         </div>
                         <div class="form-check">
                             <input 
                                 class="form-check-input" 
-                                type="radio" 
+                                type="radio"
+                                id="krywn_jk" 
                                 name="jk" 
-                                value="Perempuan" 
-                                required >
-                            <label class="form-check-label" for="gridRadios2">
-                                Perempuan
-                            </label>
+                                value="P" >
+                            <label class="form-check-label" for="gridRadios2">Perempuan</label>
                         </div>
                     </div>
                 </div>
@@ -113,10 +111,8 @@
                     <input 
                         type="text" 
                         class="form-control" 
-                        id="tglInput" 
-                        onchange="dateChange()" 
-                        name="tgl" 
-                        required >
+                        id="krywn_tgl"  
+                        name="tgl" >
                     <div class="input-group-prepend">
                         <div class="input-group-text">
                             <i class="fas fa-calendar input-prefix" tabindex=0></i>
@@ -128,9 +124,9 @@
                 <label class="col-sm-2 col-form-label" for="inlineFormCustomSelectPref">Pekerjaan</label>
                 <div class="col-sm-3">
                     <select 
+                        id="krywn_pekerjaan"
                         class="custom-select my-1 mr-sm-2" 
-                        name="pekerjaan" 
-                        required >
+                        name="pekerjaan" >
                         <?php
                         foreach($pekerjaan as $p){
                             echo '<option value="'.$p['id_pekerjaan'].'">

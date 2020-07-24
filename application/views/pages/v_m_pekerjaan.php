@@ -5,7 +5,7 @@
         </a>
     </div>
 </nav>
-<div class="tab-content pt-5" id="nav-tabContent">
+<div class="tab-content pt-3" id="nav-tabContent">
     <div class="tab-pane fade show active col-md-5" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addPekerjaan">
             <i class="fas fa fa-plus-circle"></i> Tambah Pekerjaan
@@ -29,7 +29,7 @@
                         <td>
                             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" 
                                 data-target="#editPekerjaan'.$p['id_pekerjaan'].'">
-                                Ubah
+                                Ubah <i class="fas fa fa-edit"></i>
                             </button>
                             <a class="btn btn-danger btn-sm text-light" 
                             onclick="swalConfirm(`pekerjaan`,`'.$p['id_pekerjaan'].'`,`'.$p['nama_pekerjaan'].'`);">

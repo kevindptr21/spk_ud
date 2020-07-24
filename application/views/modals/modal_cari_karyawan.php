@@ -23,11 +23,18 @@
                     <tbody>
                     <?php
                     $no = 1;
+                    function get_month_diff($start, $end = FALSE){
+                        $end OR $end = time();
+
+                        $start = new DateTime("$start");
+                        $end   = new DateTime("$end");
+                        $diff  = $start->diff($end);
+
+                        return $diff->format('%y') * 12 + $diff->format('%m');
+                    }
+
                     foreach($getKaryawan as $ck) {
-                        $d1 = new DateTime($ck['tgl_awal_bekerja']);
-                        $d2 = new DateTime(date('d-m-Y'));
-                        $diff = $d1->diff($d2);
-                        $months = $diff->format('%y') * 12 + $diff->format('%m');
+                        $months = get_month_diff($ck['tgl_awal_bekerja'],date('d-m-Y'));
                         $id = $ck['id_karyawan'];
                         $nama = $ck['nama_karyawan'];
                         echo '<tr>
@@ -36,10 +43,10 @@
                             <td>'.$ck['jenis_kelamin'].'</td>
                             <td>'.$ck['nama_pekerjaan'].'</td>
                             <td id="mk">'.$months.' Bulan</th>
-                            <td>
-                                <button class="btn btn-primary text-light" data-dismiss="modal" 
+                            <td id="pilihKaryawan'.$id.'">
+                                <button class="btn btn-primary btn-sm text-light" data-dismiss="modal" 
                                 onclick="getDataFromModal(`'.$id.'`,`'.$nama.'`,`'.$months.'`)">
-                                    Pilih
+                                    Pilih <i class="fas fa fa-square"></i>
                                 </button>
                             </td>
                         </tr>

@@ -9,7 +9,7 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="stat
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?php base_url()?>karyawan/changeKaryawan" method="post">
+            <form action="<?php base_url()?>karyawan/changeKaryawan" method="post" id="edtKrywn">
                 <div class="modal-body">
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-4 col-form-label">Nama Karyawan</label>
@@ -32,8 +32,7 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="stat
                                 name="alamat" 
                                 cols="30" 
                                 rows="5" 
-                                class="form-control" ><?= $ke['alamat']; ?>
-                            </textarea>
+                                class="form-control" ><?= $ke['alamat']; ?></textarea>
                         </div>
                     </div>
                     <fieldset class="form-group">
@@ -45,8 +44,8 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="stat
                                         class="form-check-input" 
                                         type="radio" 
                                         name="jk" 
-                                        value="Laki-Laki"
-                                    <?php if($ke['jenis_kelamin'] == "Laki-Laki"){ echo "checked";} ?> />
+                                        value="L"
+                                    <?php if($ke['jenis_kelamin'] == "L"){ echo "checked";} ?> />
                                     <label class="form-check-label" for="gridRadios1">
                                         Laki-Laki
                                     </label>
@@ -56,8 +55,8 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="stat
                                         class="form-check-input" 
                                         type="radio" 
                                         name="jk" 
-                                        value="perempuan"
-                                    <?php if($ke['jenis_kelamin'] == "Perempuan"){ echo "checked";} ?> >
+                                        value="P"
+                                    <?php if($ke['jenis_kelamin'] == "P"){ echo "checked";} ?> >
                                     <label class="form-check-label" for="gridRadios2">
                                         Perempuan
                                     </label>

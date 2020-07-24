@@ -13,12 +13,12 @@
     <!-- INPUT NILAI -->
     <div class="tab-pane fade show active" id="nav-penilaian" role="tabpanel" aria-labelledby="nav-penilaian-tab">
         <div id="form-penilaian">
-            <form id="frm" method="post" action="<?php base_url()?>penilaian/addPenilaian">
+            <form id="frm" method="post" > <!-- action="<?php base_url()?>penilaian/addPenilaian" -->
                 <div class="form-group row">
                     <label class="col-sm-5 col-form-label">Tanggal Penilaian</label>
                     <div class="col-sm">
                         <select name="tgl_penilaian" id="tgl" class="form-control col-md-8">
-                            <option><?= date('d-m-Y');?></option>
+                            <option value="<?= date('d-m-Y');?>"><?= date('d-m-Y');?></option>
                             <?php
                             foreach($tgl as $date){
                                 echo '<option value="'.$date['tgl_penilaian'].'">'.$date['tgl_penilaian'].'</option>';
@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <input type="hidden" id="id" name="id">
+                    <input type="hidden" id="id" name="id" required>
                     <label class="col-sm-5 col-form-label">Nama Karyawan</label>
                     <div class="col-sm">
                         <input 
@@ -51,8 +51,8 @@
                         <div class="col-sm">';
                         if($pk['jenis_kriteria'] == "Kualitatif"){
                             echo '<select name="n_penilaian[]" id="s'.substr($pk['id_kriteria'],1).'" 
-                            class="form-control" style="width:9em;" required>
-                                <option value="0">Pilih</option>
+                            class="form-control" style="width:9em;">
+                                <option selected>Pilih</option>
                                 <option value="5">Sangat Baik</option>
                                 <option value="4">Baik</option>
                                 <option value="3">Cukup</option>
@@ -64,17 +64,15 @@
                             echo '
                             <input
                                 style="width:5em;"
-                                type="number" 
-                                min="0" 
+                                type="number"  
                                 name="n_penilaian[]"';
                                 if($pk['nama_kriteria'] == "Masa Kerja"){
-                                    echo 'id="nk"';
+                                    echo 'id="nk" min="0"';
                                 }else if($pk['nama_kriteria'] == "Presensi"){
-                                    echo 'id="nk2" max="310"';
+                                    echo 'id="nk2" min="0" max="310"';
                                 }
                                 echo 'class="form-control" 
                                 pattern="[0-9]"
-                                required 
                             />';
                         }
 
@@ -85,7 +83,7 @@
 
                 <div class="form-group row d-flex justify-content-center">
                     <div class="col-md-10 ml-auto">
-                        <button type="submit" id="conf" class="btn btn-primary mr-5 btn-md align-self-center">
+                        <button type="submit" id="confPenilaian" class="btn btn-primary mr-5 btn-md align-self-center">
                             Tambah <i class="fas fa fa-plus-circle"></i>
                         </button>
                         <button type="reset" id="btl" class="btn btn-warning btn-md">
@@ -103,7 +101,7 @@
                         <h4>List Karyawan Terinput</h4>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <h5>Tanggal : <?php echo date('d-m-Y')?></h5>
+                        <h5 id="tglInputNilai"></h5>
                     </div>
                 </div>
                 <div class="container pt-3">
@@ -113,8 +111,6 @@
                             <th>Nama Karyawan</th>
                             <th style="width: 100px;">Aksi</th>
                         </thead>
-                        <tbody id="listPenilaian">
-                        </tbody>
                     </table>
                 </div>
             </div>
@@ -131,24 +127,26 @@
             <div class="p-2 bd-highlight">
                 <select id="ST" class="form-control col-md-15">
                     <option selected>Pilih</option>
-                    <?php foreach($tgl as $dateST){
+                    <?php foreach($tglST as $dateST){
                         echo '<option value="'.$dateST['tgl_penilaian'].'">'.$dateST['tgl_penilaian'].'</option>';
                     } ?>
                 </select>
             </div>
 
             <div class="p-2 bd-highlight">
-                <a href="<?php base_url()?>penilaian/printToPdf">
-                    <button 
-                        class="btn btn-primary btn-lg text-light">
-                        <i class="fas fa fa-print"></i> Print
-                    </button>
-                </a>
+                <button 
+                    id="printToPdf"
+                    type="button"
+                    disabled
+                    onclick="printToPdf()"
+                    class="btn btn-primary btn-lg text-light">
+                    <i class="fas fa fa-print"></i> Print
+                </button>
             </div>
         </div>
 
         <div class='mt-3' id="spkST" style="height: 60vh;overflow-y:auto;">
-           
+           <h5>Silahkan Pilih Tanggal Penilaian</h5>
         </div>
 
 
@@ -157,5 +155,6 @@
 </div>
 
 <?php
+$this->load->view('modals/modal_cari_karyawan');
 $this->load->view('modals/modal_edit_penilaian'); 
 ?>

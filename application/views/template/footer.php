@@ -10,41 +10,103 @@
     <script src="<?php echo base_url() ?>assets/svg-with-js/js/fontawesome-all.min.js"></script>
     <script src="<?php echo base_url() ?>assets/js/loader.js"></script>
     <script src="<?php base_url() ?>assets/js/dataAjax.js"></script>
-    <script src="<?php base_url() ?>assets/js/formValidation.js"></script>
-    
+    <script src="<?php base_url() ?>assets/js/jquery-validate.min.js"></script>
+
+    <?php if($_SERVER["REQUEST_URI"] === "/karyawan"){ ?>
     <script lang="javascript">
         $(document).ready(function() {
             $('#karyawan').DataTable({
                 scrollY: 340,
+                info: false,
             });
-            $('#searchKaryawan').DataTable();
+            $("#krywn").validate({
+                submitHandler: function(form){
+                  form.submit();
+                  showLoading();
+                },
+                rules: {
+                    nama : {
+                        required: true,
+                    },
+                    alamat : {
+                        required: true,
+                    },
+                    tgl : {
+                        required: true,
+                    }
+                },
+                messages : {
+                    nama : {
+                        required: "Tidak Boleh Kosong!",
+                    },
+                    alamat : {
+                        required: "Tidak Boleh Kosong!",
+                    },
+                    tgl : {
+                        required: "",
+                    }
+                },
+            });
+            $("#edtKrywn").validate({
+                submitHandler: function(form){
+                  form.submit();
+                  showLoading();
+                },
+                rules: {
+                    nama : {
+                        required: true,
+                    },
+                    alamat : {
+                        required: true,
+                    },
+                    tgl : {
+                        required: true,
+                    }
+                },
+                messages : {
+                    nama : {
+                        required: "Tidak Boleh Kosong!",
+                    },
+                    alamat : {
+                        required: "Tidak Boleh Kosong!",
+                    },
+                    tgl : {
+                        required: "",
+                    }
+                },
+            });
         });
-        
-        function dateChange() {
-            var tgl = document.getElementById("tglInput").value;
-            var res = tgl.replace("/","-").replace("/","-");
-            document.getElementById('tglInput').value = res;
-        };
-        
-        function getDataFromModal(a,b,c){
-            document.getElementById('id').value = a;
-            document.getElementById('nama').value = b;
-            document.getElementById('nk').value = c;
-        }
     </script>
-
-    <?php if($_SERVER["REQUEST_URI"] === "/penilaian"){ ?>
+    <?php } else if ($_SERVER["REQUEST_URI"] === "/penilaian"){ ?>
     <script lang="javascript">
+        $('#searchKaryawan').DataTable();
         var tgl = $("#tgl").val();
         getAjaxPenilaian(tgl);
         $("#tgl").bind('change',function(e){
             e.preventDefault();
             getAjaxPenilaian($(this).val());
         });
+        
         $("#ST").bind('change', function(e) {
-            showLoading();
-            getAjaxST($(this).val());
+            if($("#ST").val() == "Pilih"){
+                $("#printToPdf").attr('disabled',true);
+                document.getElementById('spkST').innerHTML = "<h5>Silahkan Pilih Tanggal Penilaian</h5>";
+            }else{
+                $("#printToPdf").removeAttr('disabled');
+                showLoading();
+                getAjaxST($(this).val());
+            }
         });
+
+        function printToPdf(){
+            window.location.href = "<?php base_url()?>penilaian/printToPdf/"+$("#ST").val();
+        }
+
+        function getDataFromModal(a,b,c){
+            document.getElementById('id').value = a;
+            document.getElementById('nama').value = b;
+            document.getElementById('nk').value = c;
+        }
     </script>
     <?php } ?>
 
@@ -74,6 +136,7 @@
             showLoading();
             $("#addKriteria").hide();
         });
+
     </script>
 </body>
 

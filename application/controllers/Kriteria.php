@@ -5,6 +5,7 @@ class Kriteria extends CI_Controller {
 
 	function __construct(){
         parent::__construct();
+        
         if($this->session->userdata('login') == false){
             redirect('auth');
         }
@@ -19,6 +20,10 @@ class Kriteria extends CI_Controller {
         $this->load->view('template/body');
 		$this->load->view('pages/v_m_kriteria',$data);
 		$this->load->view('template/footer');
+    }
+
+    public function getKriteria(){
+        echo json_encode($this->M_Kriteria->getListKriteria());
     }
     
     private function validation($params,$data) {

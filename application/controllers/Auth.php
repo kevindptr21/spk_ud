@@ -15,7 +15,7 @@ class Auth extends CI_Controller {
 	}
 
 	public function authentication() {
-		$uname = $this->input->post('uname');
+		$uname = ucwords($this->input->post('uname'));
 		$pass = md5($this->input->post('pass'));
 		$data = $this->M_Auth->isLogin($uname,$pass);
 		
@@ -27,7 +27,7 @@ class Auth extends CI_Controller {
 				'user code' => $data[0]['id_user'],
 			);
 			$this->session->set_userdata($sessData);
-			$this->session->set_flashdata('success','Selamat Datang '.$data[0]['nama_user']);
+			$this->session->set_flashdata('success','Selamat Datang '.ucwords($data[0]['nama_user']));
 			redirect("home");
 
 		}else {

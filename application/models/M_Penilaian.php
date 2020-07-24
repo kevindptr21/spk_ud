@@ -16,6 +16,17 @@ class M_Penilaian extends CI_Model {
         ->get()->result_array();
     }
 
+    public function getTglPenilaianST(){
+        return $this->db
+        ->select('tgl_penilaian, COUNT(*) as c')
+        ->from('penilaian t1')
+        ->join('karyawan t2','t2.id_karyawan = t1.id_karyawan')
+        ->group_by('tgl_penilaian')
+        ->having('c >= 1')
+        ->order_by('c')
+        ->get()->result_array();
+    }
+
     public function getListPenilaianTgl($params){
         return $this->db
         ->from("penilaian t1")

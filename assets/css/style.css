@@ -93,7 +93,7 @@ ul li:hover{
 }
 
 .tk {
-	font-size: 14px;
+	font-size: 13px;
 }
 
 input[type=text] {
@@ -117,6 +117,12 @@ input[type=text] {
 
 #inputed-data{
 	width: 60%;
-	/* padding-left:20px; */
 	float:right;
+}
+
+label.error {
+	color: red;
+	font-size: 0.8rem;
+	display: block;
+	margin-top: 5px;
 }

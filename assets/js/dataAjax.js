@@ -1,9 +1,31 @@
 function getAjaxPenilaian(id){
+    $.ajax({
+        url: window.location.origin + window.location.pathname + 
+        "/getDataAjax/"+id,
+        type: "GET",
+        cache: false,
+        dataType: "JSON",
+    }).done(function(data){
+        var len = data.data.length;
+        var btnInputed = `<td>
+            <button class="btn btn-sm btn-success">Done <i class="fas fa fa-check-circle"></i></button>
+        </td>`;
+        for(var i=0;i<len;i++){
+            if($("#pilihKaryawan"+data.data[i].idKaryawan) != data.data[i].idKaryawan){
+                $("#pilihKaryawan"+data.data[i].idKaryawan).replaceWith(btnInputed);
+            }
+            
+        }
+    });
+
+    document.getElementById("tglInputNilai").innerHTML = "Tanggal : "+$("#tgl").val();
+
     $("#mydata").DataTable({
         scrollY: 250,
         ajax: {
             url: window.location.origin + window.location.pathname + 
-            "/getDataAjax/"+id
+            "/getDataAjax/"+$("#tgl").val(),
+            type: "POST",
         },
         columns:[
             {data : 'no'},
@@ -14,6 +36,7 @@ function getAjaxPenilaian(id){
         info: true,
         destroy: true,
     });
+    
 }
 
 function getAjaxEditPenilaian(id){
@@ -130,10 +153,10 @@ function idealSolution(idealPos,idealNeg,kriteria,tablName){
     html += `
     <thead class="thead-dark">
         <th scope="col">Nama Kriteria</th>
-        <th scope="col">Positif(A+)</th>
-        <th scope="col">MAX(Yij)</th>
-        <th scope="col">Negatif(A-)</th>
-        <th scope="col">MIN(Yij)</th>
+        <th scope="col">Positif (A+)</th>
+        <th scope="col">MAX (Yij)</th>
+        <th scope="col">Negatif (A-)</th>
+        <th scope="col">MIN (Yij)</th>
         </thead>
     <tbody>`;
     for(var i=0;i<kriteria.length;i++){
@@ -155,8 +178,8 @@ function distanceIdealSolution(dPos,dNeg,length,tableName){
     html += `
     <thead class="thead-dark">
         <th scope="col">Alternatif</th>
-        <th scope="col">Positif(D+)</th>
-        <th scope="col">Negatif(D-)</th>
+        <th scope="col">Positif (D+)</th>
+        <th scope="col">Negatif (D-)</th>
         </thead>
     <tbody>`;
     for(var i=0;i<length;i++){
