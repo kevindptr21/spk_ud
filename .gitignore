@@ -9,6 +9,7 @@ application/logs/*
 !application/*/.htaccess
 
 system/sessions/*
+system/spk_ud/*
 composer.lock
 
 user_guide_src/build/*
