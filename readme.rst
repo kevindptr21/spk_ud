@@ -19,8 +19,8 @@ PHP Desktop is an open source project founded by Czarek Tomczak in 2012 to provi
 ************
 Installation
 ************
- Markup : * Download PHP Desktop from https://github.com/cztomczak/phpdesktop (not source code)
-          * Extract downloaded zip
-					* Backup all files in www directory or you can delete them all
-					* Clone this repository in www directory
-					* Start the Application
+* Download PHP Desktop from https://github.com/cztomczak/phpdesktop (not source code)
+* Extract downloaded zip
+* Backup all files in www directory or you can delete them all
+* Clone this repository in www directory
+* Start the Application
