@@ -11,6 +11,16 @@ you creatively focus on your project by minimizing the amount of code needed
 for a given task.
 
 *******************
+SPK or DSS (Decision Support System)
+*******************
+
+A decision support system (DSS) is a computerized program used to support determinations,
+judgments, and courses of action in an organization or a business. A DSS sifts through and analyzes
+massive amounts of data, compiling comprehensive information that can be used to solve problems and in decision-making.
+In this case, i'm using combination method between SMART (Simple Multi Attribute Rating Technique) and TOPSIS
+(Techniques for Others Reference by Similarity to Ideal Solution) for conducting employee performance assessment.
+
+*******************
 PHP Desktop
 *******************
 
@@ -22,5 +32,5 @@ Installation
 * Download PHP Desktop from https://github.com/cztomczak/phpdesktop (don't choose source code)
 * Extract downloaded zip
 * Backup all files in www directory or you can delete them all
-* Clone this repository in www directory
+* Clone this repository and move it to www directory inside extracted PHP Desktop
 * Start the Application
